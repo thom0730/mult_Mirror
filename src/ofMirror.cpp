@@ -27,9 +27,9 @@ void ofMirror::draw(){
     
     
     
-    if(gui->DrawFlg[1]){
-        if(counter < gui->fbo[1].size()){
-            gui->fbo[1][counter]->draw(0, 0,1125,ofGetHeight());
+    if(gui->DrawFlg[gui->R]){
+        if(counter < gui->fbo[gui->R].size()){
+            gui->fbo[gui->R][counter]->draw(0, 0,1125,ofGetHeight());
             cout << "デバッグ " << counter <<endl;
         }else{
             counter = 0;

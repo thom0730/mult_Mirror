@@ -133,6 +133,24 @@ void GuiApp::keyReleased(int key){
         stop(1);
     }
     
+    //投影カメラの切り替え
+    if(key == 'o'){
+        if(L == 0){
+            L = 1;
+        }else{
+            L = 0;
+        }
+    }
+    
+    if(key == 'p'){
+        if(R == 0){
+            R = 1;
+        }else{
+            R = 0;
+        }
+        
+    }
+    
     
     
     //グリッチ加工の処理

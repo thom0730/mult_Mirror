@@ -37,6 +37,10 @@ public:
     //グリッチのインスタンス
     vector<ofxPostGlitch> myGlitch[camNUM];
     
+    //カメラの左右の切り替え
+    int L = 0;
+    int R = 1;
+    
     
 };
 
