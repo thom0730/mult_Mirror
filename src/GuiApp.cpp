@@ -80,6 +80,7 @@ void GuiApp::draw(){
     //FBOの描画
     for(int i = 0 ; i < camNUM;i++){
         if(DrawFlg[i]){
+            cout << i << endl;
            FboDraw(i);
         }
         
@@ -136,13 +137,13 @@ void GuiApp::keyReleased(int key){
 //--------------------------------------------------------------
 void GuiApp::FboUpdate(int camera){
     
-    fbo[camera].push_back(new ofFbo);//任意のカメラのFBOにバッファを追加
+    fbo[camera].push_back(*new ofFbo);//任意のカメラのFBOにバッファを追加
     int num = fbo[camera].size()-1;
-    fbo[camera][num]->allocate(camWidth, camHeight, GL_RGB); //FBOの準備
+    fbo[camera][num].allocate(camWidth, camHeight, GL_RGB); //FBOの準備
     //FBOの書き込み
-    fbo[camera][num]->begin();
-    vidGrabber[camera].draw(0, 0, fbo[camera][num]->getWidth(), fbo[camera][num]->getHeight());
-    fbo[camera][num]->end();
+    fbo[camera][num].begin();
+    vidGrabber[camera].draw(0, 0, fbo[camera][num].getWidth(), fbo[camera][num].getHeight());
+    fbo[camera][num].end();
     
     
    /* //グリッジ
@@ -163,7 +164,7 @@ void GuiApp::FboDraw(int camera){
     int position = camera + 1;//生成位置の指定(最終的には必要ない処理)
     if(counter[camera] < fbo[camera].size()){
       //  myGlitch[camera][counter[camera]].generateFx(); //グリッチを生成
-        fbo[camera][counter[camera]]->draw(position*camWidth,camHeight);
+        fbo[camera][counter[camera]].draw(position*camWidth,camHeight);
         
         cout << "FBO描画" << endl;
     }else{

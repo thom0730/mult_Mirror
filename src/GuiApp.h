@@ -27,7 +27,7 @@ public:
     ofVideoGrabber vidGrabber[camNUM];
     ofVideoGrabber check;//カメラのIDの確認用
     int camWidth , camHeight;//動画の描画の縦横の長さ
-    vector<ofFbo *> fbo[camNUM];//それぞれの動画のFBOを定義
+    vector<ofFbo> fbo[camNUM];//それぞれの動画のFBOを定義
     
     bool RecFlg[camNUM];
     bool DrawFlg[camNUM];

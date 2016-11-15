@@ -4,6 +4,8 @@
 void ofApp::setup(){
 	ofBackground(255);
 	ofSetCircleResolution(200);
+    
+    
 
 }
 
@@ -20,14 +22,16 @@ void ofApp::draw(){
 	ofDrawBitmapString(ofGetFrameRate(),20,20);
     
 
-    if(gui->DrawFlg[1]){
-        for(int i =0 ; i <gui->fbo[1].size();i++){
-            gui->fbo[1][i]->draw(0, 0, ofGetWidth(), ofGetHeight());
-            cout << "デバッグ " << i <<endl;
+    if(gui->DrawFlg[0]){
+        if(counter < gui->fbo[0].size()){
+             gui->fbo[0][counter].draw(0, 0,gui->camWidth,gui->camHeight);
+            cout << "デバッグ " << counter <<endl;
+
+        }else{
+            counter = 0;
         }
-    }else{
-        cout << "待機" << endl;
-    }
+            }
+    counter ++ ;
     
     
         
