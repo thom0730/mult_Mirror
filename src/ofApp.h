@@ -23,4 +23,9 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		shared_ptr<GuiApp> gui;
+    
+    int counter = 0;
+
+    
+    
 };
