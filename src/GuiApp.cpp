@@ -25,8 +25,8 @@ void GuiApp::setup(){
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     
     //キャプチャするムービーのサイズを指定
-    camWidth = ofGetWidth()/3; //3
-    camHeight = (2*camWidth)/3; //2
+    camWidth = ofGetWidth();
+    camHeight = ofGetHeight()/2;
     
     
     for(int i = 0 ; i < camNUM; i++){
@@ -50,7 +50,6 @@ void GuiApp::setup(){
     
     
     //FBOの準備
-    // fbo[0]->allocate(camWidth, camHeight, GL_RGB);
     for(int i = 0;i<camNUM;i++){
         DrawFlg[i] = false;//フラグの初期化
         RecFlg[i] = false;//フラグの初期化
@@ -79,7 +78,7 @@ void GuiApp::draw(){
     
     //カメラ映像の描画
     for(int i = 0 ; i < camNUM; i++){
-        vidGrabber[i].draw(i*camWidth,0);
+        vidGrabber[i].draw(0,i*camHeight);
     }
     
     //FBOの描画
@@ -142,16 +141,16 @@ void GuiApp::keyReleased(int key){
 //--------------------------------------------------------------
 void GuiApp::FboUpdate(int camera){
     
-    fbo[camera].push_back(*new ofFbo);//任意のカメラのFBOにバッファを追加
+    fbo[camera].push_back(new ofFbo);//任意のカメラのFBOにバッファを追加
     int num = fbo[camera].size()-1;
-    fbo[camera][num].allocate(camWidth, camHeight, GL_RGB); //FBOの準備
+    fbo[camera][num]->allocate(camWidth, camHeight, GL_RGB); //FBOの準備
     //FBOの書き込み
-    fbo[camera][num].begin();
-    vidGrabber[camera].draw(0, 0, fbo[camera][num].getWidth(), fbo[camera][num].getHeight());
-    fbo[camera][num].end();
+    fbo[camera][num]->begin();
+    vidGrabber[camera].draw(0, 0, fbo[camera][num]->getWidth(), fbo[camera][num]->getHeight());
+    fbo[camera][num]->end();
     
     
-   /* //グリッジ
+    /*//グリッジ
     myGlitch[camera].push_back(*new ofxPostGlitch);//グリッチ用のインスタンスをカメラ番号の動的配列に格納
     myGlitch[camera][num].setup(fbo[camera][num]);//初期化
     //エフェクトの指定
@@ -168,8 +167,8 @@ void GuiApp::stop(int number){
 void GuiApp::FboDraw(int camera){
     int position = camera + 1;//生成位置の指定(最終的には必要ない処理)
     if(counter[camera] < fbo[camera].size()){
-      //  myGlitch[camera][counter[camera]].generateFx(); //グリッチを生成
-        fbo[camera][counter[camera]].draw(position*camWidth,camHeight);
+    
+        fbo[camera][counter[camera]]->draw(position*camWidth,camHeight);
         
         cout << "FBO描画" << endl;
     }else{
