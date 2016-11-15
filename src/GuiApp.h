@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxPostGlitch.h"
 
 //カメラの台数
 #define camNUM 2
@@ -27,13 +28,14 @@ public:
     ofVideoGrabber vidGrabber[camNUM];
     ofVideoGrabber check;//カメラのIDの確認用
     int camWidth , camHeight;//動画の描画の縦横の長さ
-    vector<ofFbo> fbo[camNUM];//それぞれの動画のFBOを定義
+    vector<ofFbo*> fbo[camNUM];//それぞれの動画のFBOを定義
     
     bool RecFlg[camNUM];
     bool DrawFlg[camNUM];
     int counter[camNUM];
     
-    
+    //グリッチのインスタンス
+    vector<ofxPostGlitch> myGlitch[camNUM];
     
     
 };
