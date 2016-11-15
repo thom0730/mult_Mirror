@@ -9,12 +9,12 @@
 //--------------------------------------------------------------
 void GuiApp::setup(){
     //GUI関係
-	parameters.setName("parameters");
+	/*parameters.setName("parameters");
 	parameters.add(radius.set("radius",50,1,100));
 	parameters.add(color.set("color",100,ofColor(0,0),255));
 	gui.setup(parameters);
 	ofBackground(0);
-	ofSetVerticalSync(false);
+	ofSetVerticalSync(false);*/
     
     ofBackground(0, 0, 0);
     ofSetFrameRate(30);
@@ -31,11 +31,16 @@ void GuiApp::setup(){
     
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].setVerbose(true);
-        vidGrabber[i].setDeviceID(i);
-        vidGrabber[i].initGrabber(camWidth, camHeight);
-        // vidGrabber[i].setDeviceID(i);
-        
+       // vidGrabber[i].setDeviceID(i);
+       // vidGrabber[i].initGrabber(camWidth, camHeight);
     }
+    
+    //カメラのIDは直接入力が良さそう
+     vidGrabber[0].setDeviceID(0);
+     vidGrabber[0].initGrabber(camWidth, camHeight);
+     vidGrabber[1].setDeviceID(2);
+     vidGrabber[1].initGrabber(camWidth, camHeight);
+    
     
     
     //カメラの接続確認

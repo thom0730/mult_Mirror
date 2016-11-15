@@ -31,6 +31,8 @@ int main( ){
 	shared_ptr<GuiApp> guiApp(new GuiApp);
     shared_ptr<ofMirror> mirrorApp(new ofMirror);
 	mainApp->gui = guiApp;
+    mirrorApp->gui = guiApp;
+
 
 	ofRunApp(guiWindow, guiApp);
     ofRunApp(mirrorWindow, mirrorApp);

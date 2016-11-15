@@ -16,26 +16,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofSetColor(gui->color);
-	ofDrawCircle(ofGetWidth()*0.5,ofGetWidth()*0.5,gui->radius);
-	ofSetColor(0);
-	ofDrawBitmapString(ofGetFrameRate(),20,20);
+	
     
 
     if(gui->DrawFlg[0]){
         if(counter < gui->fbo[0].size()){
-             gui->fbo[0][counter].draw(0, 0,gui->camWidth,gui->camHeight);
+             gui->fbo[0][counter].draw(0, 0,ofGetWidth(),ofGetHeight());
             cout << "デバッグ " << counter <<endl;
-
         }else{
             counter = 0;
         }
             }
     counter ++ ;
-    
-    
-        
-
     
     
 }
