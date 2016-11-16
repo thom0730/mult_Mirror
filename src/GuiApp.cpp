@@ -198,3 +198,12 @@ void GuiApp::FboDraw(int camera){
     
     
 }
+//--------------------------------------------------------------
+void GuiApp::Black(){
+    ofSetColor(0);
+    for(int i = 0 ; i < 3 ; i++){
+        ofRect(2*i*ofGetWidth()/6, 0,ofGetWidth()/6,ofGetHeight());
+    }
+
+    
+}

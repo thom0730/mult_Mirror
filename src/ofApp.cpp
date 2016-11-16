@@ -18,7 +18,7 @@ void ofApp::update(){
 void ofApp::draw(){
 	
     
-
+    ofSetColor(255);
     if(gui->DrawFlg[gui->L]){
         if(counter < gui->fbo[gui->L].size()){
             /*コメント解除でグリッチを生成
@@ -32,6 +32,9 @@ void ofApp::draw(){
         }
             }
     counter ++ ;
+    
+    //エフェクト
+    gui->Black();
     
     
 }
