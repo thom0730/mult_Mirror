@@ -16,6 +16,7 @@ public:
     void keyReleased(int key);
    
 
+    //いらない。最終的に消す
 	ofParameterGroup parameters;
 	ofParameter<float> radius;
 	ofParameter<ofColor> color;
@@ -41,6 +42,7 @@ public:
     int L = 0;
     int R = 1;
     
-    
+    //画面エフェクト
+    void Black();
 };
 
