@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	ofBackground(255);
+	ofBackground(0);
     ofSetFrameRate(30);
 	ofSetCircleResolution(200);
     
@@ -22,17 +22,32 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofBackground(0);
 	
     
     ofSetColor(255);
     //フラグがたっている間は遅延処理
+    
     if(gui->DrawFlg[gui->L]){
-        int index = gui->buffer%(bufferSize/2); //800フレーム前を参照
+        int buf = gui->buffer%bufferSize;//0~1799
+        int index = 0;
+    
+        
+        if(buf<(bufferSize/2)){
+             index = bufferSize+(buf-bufferSize/2); //バッファサイズで補正
+        }else{
+             index = buf-(bufferSize/2);//単純に任意のフレーム前
+        }
         gui->fbo[gui->L][index]->draw(0, 0,1125,ofGetHeight());
+        
+        counter ++;//描画の開始からインクリメント
+        
+        if(counter == bufferSize){//バッファサイズまで再生が完了したら
+            gui->DrawFlg[gui->L] = false;
+            counter = 0;
+        }
     }
 
-    
-    
     //エフェクト
  //   gui->Black();
   

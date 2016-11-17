@@ -57,11 +57,8 @@ void GuiApp::setup(){
     for(int i = 0; i< bufferSize;i++){
         for(int j = 0 ; j < camNUM ; j++){
              fbo[j][i] = new ofFbo();
-            cout << i << endl;
-            
         }
     }
-    
 }
 //--------------------------------------------------------------
 void GuiApp::update(){
@@ -94,26 +91,11 @@ void GuiApp::keyPressed(int key){
     
     if(key == '1'){
         DrawFlg[0] = true ; //描画の開始
+       
     }
     if(key == '2'){
         DrawFlg[1] = true ; //描画の開始
     }
-   
-    
-    
-}
-
-//--------------------------------------------------------------
-void GuiApp::keyReleased(int key){
-    
-    if(key == '1'){
-        DrawFlg[0] = false ; //描画の終了
-    }
-    if(key == '2'){
-        DrawFlg[1] = false ; //描画の終了
-    }
-    
- 
     
     //投影カメラの切り替え
     if(key == 'o'){
@@ -132,10 +114,12 @@ void GuiApp::keyReleased(int key){
         }
         
     }
-    
-    
-    
-    //グリッチ加工の処理
+}
+
+//--------------------------------------------------------------
+void GuiApp::keyReleased(int key){
+
+
     
 }
 
@@ -155,10 +139,4 @@ void GuiApp::Memory(int camera){
     fbo[camera][index]->begin();
     vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
     fbo[camera][index]->end();
-    
-    cout << buffer << endl;
-    
-   
- 
-    
 }
