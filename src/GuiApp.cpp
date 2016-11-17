@@ -30,9 +30,9 @@ void GuiApp::setup(){
     
     
     for(int i = 0 ; i < camNUM; i++){
-        vidGrabber[i].setVerbose(true);
-       // vidGrabber[i].setDeviceID(i);
-       // vidGrabber[i].initGrabber(camWidth, camHeight);
+        vidGrabber[i].setVerbose(true);//カメラの準備
+        DrawFlg[i] = false;//フラグの初期化
+
     }
     
     //カメラのIDは直接入力が良さそう
@@ -48,15 +48,14 @@ void GuiApp::setup(){
     check.setVerbose(true);
     check.listDevices();
     
+
     
-    //FBOの準備
-    for(int i = 0;i<camNUM;i++){
-        DrawFlg[i] = false;//フラグの初期化
-    }
-    
-    for(int i = 0; i< bufferSize;i++){
-        for(int j = 0 ; j < camNUM ; j++){
-             fbo[j][i] = new ofFbo();
+    for(int i = 0; i< camNUM;i++){
+        for(int j = 0 ; j < bufferSize ; j++){
+             fbo[i][j] = new ofFbo();
+            //FBOの準備
+            fbo[i][j]->allocate(camWidth, camHeight, GL_RGB);
+            myGlitch[i][j].setup(fbo[i][j]);
         }
     }
 }
@@ -88,13 +87,43 @@ void GuiApp::draw(){
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
     
-    
+    //描画の開始
     if(key == '1'){
-        DrawFlg[0] = true ; //描画の開始
+        DrawFlg[0] = true ;
        
     }
     if(key == '2'){
-        DrawFlg[1] = true ; //描画の開始
+        DrawFlg[1] = true ;
+    }
+    
+    //グリッチの切り替え
+    if(key == 'q'){
+        convergence = true;
+        
+    }
+    if(key == 'w'){
+        shaker = true;
+       
+    }
+    if(key == 'e'){
+        cutslider = true;
+        
+    }
+    if(key == 'r'){
+        noise = true;
+        
+    }
+    if(key == 't'){
+        slitscan = true;
+       
+    }
+    if(key == 'y'){
+        swell = true;
+        
+    }
+    if(key == 'u'){
+        blueraise = true;
+       
     }
     
     //投影カメラの切り替え
@@ -118,9 +147,37 @@ void GuiApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void GuiApp::keyReleased(int key){
-
-
+    //グリッチの切り替え
+    if(key == 'q'){
+        convergence = false;
+        
+    }
+    if(key == 'w'){
+        shaker = false;
+        
+    }
+    if(key == 'e'){
+        cutslider = false;
+        
+    }
+    if(key == 'r'){
+        noise = false;
+        
+    }
+    if(key == 't'){
+        slitscan = false;
+        
+    }
+    if(key == 'y'){
+        swell = false;
+        
+    }
+    if(key == 'u'){
+        blueraise = false;
+        
+    }
     
+ 
 }
 
 //--------------------------------------------------------------
@@ -134,9 +191,11 @@ void GuiApp::Black(){
 void GuiApp::Memory(int camera){
     int index = buffer%bufferSize ;
     //FBOの準備
-    fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
+   // fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
     //FBOに書き込む
     fbo[camera][index]->begin();
     vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
     fbo[camera][index]->end();
+    
+    
 }

@@ -7,7 +7,7 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define bufferSize 400
+#define bufferSize 600
 
 class GuiApp: public ofBaseApp {
 public:
@@ -38,6 +38,14 @@ public:
     
     //グリッチのインスタンス
     ofxPostGlitch myGlitch[camNUM][bufferSize];
+    bool convergence = false;
+    bool shaker = false;
+    bool cutslider = false;
+    bool noise = false;
+    bool slitscan = false;
+    bool swell = false;
+    bool blueraise = false;
+    
     
     //カメラの左右の切り替え
     int L = 0;

@@ -31,7 +31,6 @@ void ofMirror::draw(){
     //フラグがたっている間は遅延処理
     if(gui->DrawFlg[gui->R]){
         int buf = gui->buffer%bufferSize;//0~1799
-        int index = 0;
         
         
         if(buf<(bufferSize/2)){
@@ -39,6 +38,18 @@ void ofMirror::draw(){
         }else{
             index = buf-(bufferSize/2);//単純に任意のフレーム前
         }
+        
+        //グリッチ各種
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CONVERGENCE,gui->convergence);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SHAKER	, gui->shaker);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CUTSLIDER	, gui->cutslider);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_NOISE	, gui->noise);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SLITSCAN	, gui->slitscan);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SWELL	, gui->swell);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, gui->blueraise);
+        
+        gui->myGlitch[gui->R][index].generateFx();
+
 
         gui->fbo[gui->R][index]->draw(0, 0,1125,ofGetHeight());
         
