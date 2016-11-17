@@ -52,8 +52,14 @@ void GuiApp::setup(){
     //FBOの準備
     for(int i = 0;i<camNUM;i++){
         DrawFlg[i] = false;//フラグの初期化
-        RecFlg[i] = false;//フラグの初期化
-        counter[i] = 0;
+    }
+    
+    for(int i = 0; i< bufferSize;i++){
+        for(int j = 0 ; j < camNUM ; j++){
+             fbo[j][i] = new ofFbo();
+            cout << i << endl;
+            
+        }
     }
     
 }
@@ -62,13 +68,13 @@ void GuiApp::update(){
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].update();
     }
-    //FBOへの格納
+    
+    //バッファに常に書き込む
     for(int i = 0 ; i < camNUM;i++){
-        if(RecFlg[i]){
-            FboUpdate(i);
-            cout << "FBOカクノウ" << endl;
-        }
+        Memory(i);
     }
+    buffer ++;
+
     
 }
 //--------------------------------------------------------------
@@ -81,29 +87,13 @@ void GuiApp::draw(){
         vidGrabber[i].draw(0,i*camHeight);
     }
     
-    //FBOの描画
-    for(int i = 0 ; i < camNUM;i++){
-        if(DrawFlg[i]){
-            cout << i << endl;
-           FboDraw(i);
-        }
-        
-    }
-
 }
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
     
-    //カメラ1
-    if (key == 'z' || key == 'Z'){
-        RecFlg[0] = true; //録音の開始
-    }
+    
     if(key == '1'){
         DrawFlg[0] = true ; //描画の開始
-    }
-    //カメラ2
-    if (key == 'x' || key == 'X'){
-        RecFlg[1] = true; //録音の開始
     }
     if(key == '2'){
         DrawFlg[1] = true ; //描画の開始
@@ -116,22 +106,14 @@ void GuiApp::keyPressed(int key){
 //--------------------------------------------------------------
 void GuiApp::keyReleased(int key){
     
-    //カメラ(FBO)の処理
-    
-    //カメラ1
-    if (key == 'z' || key == 'Z'){
-        RecFlg[0] = false; //録音の停止
-    }
     if(key == '1'){
-        stop(0);
-    }
-    //カメラ2
-    if (key == 'x' || key == 'X'){
-        RecFlg[1] = false; //録音の停止
+        DrawFlg[0] = false ; //描画の終了
     }
     if(key == '2'){
-        stop(1);
+        DrawFlg[1] = false ; //描画の終了
     }
+    
+ 
     
     //投影カメラの切り替え
     if(key == 'o'){
@@ -156,54 +138,27 @@ void GuiApp::keyReleased(int key){
     //グリッチ加工の処理
     
 }
-//--------------------------------------------------------------
-void GuiApp::FboUpdate(int camera){
-    
-    fbo[camera].push_back(new ofFbo);//任意のカメラのFBOにバッファを追加
-    int num = fbo[camera].size()-1;
-    fbo[camera][num]->allocate(camWidth, camHeight, GL_RGB); //FBOの準備
-    //FBOの書き込み
-    fbo[camera][num]->begin();
-    vidGrabber[camera].draw(0, 0, fbo[camera][num]->getWidth(), fbo[camera][num]->getHeight());
-    fbo[camera][num]->end();
-    
-    
-    /*//グリッジ
-    myGlitch[camera].push_back(*new ofxPostGlitch);//グリッチ用のインスタンスをカメラ番号の動的配列に格納
-    myGlitch[camera][num].setup(fbo[camera][num]);//初期化
-    //エフェクトの指定
-    myGlitch[camera][num].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, true);*/
-    
-}
-//--------------------------------------------------------------
-void GuiApp::stop(int number){
-    DrawFlg[number] = false ;
-    counter[number] = 0;
-    fbo[number].clear();
-}
-//--------------------------------------------------------------
-void GuiApp::FboDraw(int camera){
-    int position = camera + 1;//生成位置の指定(最終的には必要ない処理)
-    if(counter[camera] < fbo[camera].size()){
-    
-        fbo[camera][counter[camera]]->draw(position*camWidth,camHeight);
-        
-        cout << "FBO描画" << endl;
-    }else{
-        stop(camera);
-    }
-    
-    counter[camera]++;
-    
-    
-    
-}
+
 //--------------------------------------------------------------
 void GuiApp::Black(){
     ofSetColor(0);
     for(int i = 0 ; i < 3 ; i++){
         ofRect(2*i*ofGetWidth()/6, 0,ofGetWidth()/6,ofGetHeight());
     }
-
+}
+//--------------------------------------------------------------
+void GuiApp::Memory(int camera){
+    int index = buffer%bufferSize ;
+    //FBOの準備
+    fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
+    //FBOに書き込む
+    fbo[camera][index]->begin();
+    vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
+    fbo[camera][index]->end();
+    
+    cout << buffer << endl;
+    
+   
+ 
     
 }

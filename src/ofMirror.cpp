@@ -11,6 +11,7 @@
 //--------------------------------------------------------------
 void ofMirror::setup(){
     ofBackground(255);
+    ofSetFrameRate(30);
     ofSetCircleResolution(200);
     
     
@@ -27,14 +28,10 @@ void ofMirror::draw(){
     
     
     
+    //フラグがたっている間は遅延処理
     if(gui->DrawFlg[gui->R]){
-        if(counter < gui->fbo[gui->R].size()){
-            gui->fbo[gui->R][counter]->draw(0, 0,1125,ofGetHeight());
-            cout << "デバッグ " << counter <<endl;
-        }else{
-            counter = 0;
-        }
-    }
-    counter ++ ;
+        int index = gui->buffer%(bufferSize/2); //800フレーム前を参照
+        gui->fbo[gui->R][index]->draw(0, 0,1125,ofGetHeight());
+    }   
     
 }

@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofBackground(255);
+    ofSetFrameRate(30);
 	ofSetCircleResolution(200);
     
     
@@ -11,6 +12,11 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    /*コメント解除でグリッチを生成
+     gui->myGlitch[0][counter].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, true);
+     gui->myGlitch[0][counter].generateFx(); //グリッチを生成
+     */
 
 }
 
@@ -19,23 +25,17 @@ void ofApp::draw(){
 	
     
     ofSetColor(255);
+    //フラグがたっている間は遅延処理
     if(gui->DrawFlg[gui->L]){
-        if(counter < gui->fbo[gui->L].size()){
-            /*コメント解除でグリッチを生成
-            gui->myGlitch[0][counter].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, true);
-            gui->myGlitch[0][counter].generateFx(); //グリッチを生成
-             */
-            gui->fbo[gui->L][counter]->draw(0, 0,1125,ofGetHeight());
-            cout << "デバッグ " << counter <<endl;
-        }else{
-            counter = 0;
-        }
-            }
-    counter ++ ;
+        int index = gui->buffer%(bufferSize/2); //800フレーム前を参照
+        gui->fbo[gui->L][index]->draw(0, 0,1125,ofGetHeight());
+    }
+
+    
     
     //エフェクト
-    gui->Black();
-    
+ //   gui->Black();
+  
     
 }
 
