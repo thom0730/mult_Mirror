@@ -23,11 +23,14 @@ public:
     
     int counter = 0;
     int index = 0;
+    int startCount = 0;
     
     int number = 0;
     bool flg = true;//エフェクトの切り替え(巻き戻し->遅延)
     
     ofSoundPlayer beatsound;
+    
+
     
     
     

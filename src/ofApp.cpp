@@ -15,9 +15,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    cout << counter << endl;
-    
-    
+    gui->UpdateFBO(gui->L,index);
+
     if(counter == 3*bufferSize/4){
         beatsound.play();
     }
@@ -33,11 +32,11 @@ void ofApp::draw(){
     
     
     //------------現在------------------
-    if(gui->start){
+    if(gui->startL){
         gui->vidGrabber[gui->L].draw(0,0,1125,ofGetHeight());
         startCount++;
         if(startCount>bufferSize/4){//だいたいこんなもん?
-            gui->start = false;//「0.現在」を抜ける
+            gui->startL = false;//「0.現在」を抜ける
             gui->DrawFlg[gui->L] = true;//イントロの開始
             startCount = 0; //エフェクトスタートのトリガーのリセット
         }
@@ -45,6 +44,7 @@ void ofApp::draw(){
     
     //---------0.イントロ(準備)---------
     if(gui->DrawFlg[gui->L]){
+
         int buf = gui->buffer%bufferSize;//バッファサイズを置換0~1799
         
         if(buf<(bufferSize/2)){//格納バッファの半分前
@@ -68,7 +68,7 @@ void ofApp::draw(){
         //------------2.描画/エフェクト----------------
         //FBOの描画全般
         gui->DrawFBO(gui->L,index);
-        
+
         gui->Black();
         
         if(!flg){

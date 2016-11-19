@@ -49,14 +49,31 @@ void GuiApp::setup(){
     
 
     //Glitchとエフェクトの準備
-    for(int i = 0; i< camNUM;i++){
+  /*  for(int i = 0; i< camNUM;i++){
         for(int j = 0 ; j < bufferSize ; j++){
              fbo[i][j] = new ofFbo();
             //FBOの準備
             fbo[i][j]->allocate(camWidth, camHeight, GL_RGB);
             myGlitch[i][j].setup(fbo[i][j]);
         }
+    }*/
+    for(int cam = 0; cam< camNUM; cam++){
+        
+        // get capture size
+        capW[cam] = vidGrabber[cam].getWidth();
+        capH[cam] = vidGrabber[cam].getHeight();
+        capBytes[cam] = capW[cam] * capH[cam] * 3;
+        
+        // Create capture buffer
+        videoBuf[cam] = (unsigned char *) malloc ( capBytes[cam] * bufferSize );
+        
+        // Create FBO & Glitch & Tex
+        oneFbo[cam] = new ofFbo();
+        oneFbo[cam]->allocate(camWidth, camHeight, GL_RGB);
+        oneGlitch[cam].setup(oneFbo[cam]);
+        oneTex[cam].allocate(capW[cam], capH[cam], GL_RGB);
     }
+
     
     
 }
@@ -129,7 +146,8 @@ void GuiApp::keyPressed(int key){
     
     //映像演出のスタート
     if(key == 'z'){
-        start = true;
+        startL = true;
+        startR = true;
     }
     
     //投影カメラの切り替え
@@ -153,7 +171,7 @@ void GuiApp::keyPressed(int key){
     ////////////////デバッグ////////////////
     if(key == 'm'){
         blackFlg = true;
-        center = ofGetHeight()/2;
+        center = ofGetHeight()*2;
 
     }
     /////////////////////////////////////
@@ -208,24 +226,47 @@ void GuiApp::Memory(int camera){
     //FBOの準備
    // fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
     //FBOに書き込む
-    fbo[camera][index]->begin();
+    /*fbo[camera][index]->begin();
     vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
-    fbo[camera][index]->end();
+    fbo[camera][index]->end();*/
+    
+    // Store to pixel buffer
+    unsigned char* src = vidGrabber[camera].getPixels().getData();
+    int pos = index * capBytes[camera];
+    unsigned char* dst = videoBuf[camera] + pos;
+    memcpy( dst, src, capBytes[camera] );
+    
+
     
     
 }
-void GuiApp::DrawFBO(int LorR,int i){
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CONVERGENCE,convergence);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SHAKER	, shaker);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CUTSLIDER	, cutslider);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_NOISE	, noise);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SLITSCAN	, slitscan);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SWELL	, swell);
-    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, blueraise);
+void GuiApp::UpdateFBO(int camera, int index)
+{
+    oneFbo[camera]->begin();
     
-    myGlitch[LorR][i].generateFx();
+    // mem to texture
+    int pos = index * capBytes[camera];
+    oneTex[camera].loadData( videoBuf[camera]+pos, capW[camera], capH[camera], GL_RGB);
+    
+    //    oneFbo[camera]->attachTexture(oneTex[camera], GL_RGB, GL_COLOR_ATTACHMENT0);
+    //    oneTex[camera].draw( 0, 0, capW[camera], capH[camera]);
+    oneTex[camera].draw( 0, 0);
+    
+    oneFbo[camera]->end();
+    
+}
+void GuiApp::DrawFBO(int camera, int index){
+        
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_CONVERGENCE,convergence);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SHAKER	, shaker);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_CUTSLIDER	, cutslider);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_NOISE	, noise);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SLITSCAN	, slitscan);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SWELL	, swell);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, blueraise);
+    
+    oneGlitch[camera].generateFx();
     
     //FBOの描画
-    fbo[LorR][i]->draw(0, 0,1125,ofGetHeight());
-    
+   oneFbo[camera]->draw(0, 0,1125,ofGetHeight());
 }
