@@ -7,7 +7,9 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define bufferSize 600
+#define bufferSize 1800
+//映像レイヤーエフェクトの数
+#define movNum 3
 
 class GuiApp: public ofBaseApp {
 public:
@@ -29,6 +31,7 @@ public:
     //格納の経過をカウンター。実際はこれをBufferSizeで割ったあまりを用いる。
     int buffer = 0;
     bool DrawFlg[camNUM];
+    void DrawFBO(int LorR,int i);
     
     ofVideoGrabber vidGrabber[camNUM];
     ofVideoGrabber check;//カメラのIDの確認用
@@ -53,5 +56,7 @@ public:
     
     //画面エフェクト
     void Black();
+    
+   
 };
 

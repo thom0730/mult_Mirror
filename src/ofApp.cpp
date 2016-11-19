@@ -5,18 +5,13 @@ void ofApp::setup(){
 	ofBackground(0);
     ofSetFrameRate(30);
 	ofSetCircleResolution(200);
-    
-    
-
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    /*コメント解除でグリッチを生成
-     gui->myGlitch[0][counter].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, true);
-     gui->myGlitch[0][counter].generateFx(); //グリッチを生成
-     */
+    
+    
   
 
 }
@@ -24,41 +19,47 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0);
-	
-    
     ofSetColor(255);
     //フラグがたっている間は遅延処理
     
+    //エフェクトのイントロ
     if(gui->DrawFlg[gui->L]){
-        int buf = gui->buffer%bufferSize;//0~1799
-      //int index = 0;
-    
+        int buf = gui->buffer%bufferSize;//バッファサイズを置換0~1799
         
-        if(buf<(bufferSize/2)){
+        if(buf<(bufferSize/2)){//格納バッファの半分前
              index = bufferSize+(buf-bufferSize/2); //バッファサイズで補正
         }else{
              index = buf-(bufferSize/2);//単純に任意のフレーム前
         }
         
-        //グリッチ各種
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_CONVERGENCE,gui->convergence);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_SHAKER	, gui->shaker);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_CUTSLIDER	, gui->cutslider);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_NOISE	, gui->noise);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_SLITSCAN	, gui->slitscan);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_SWELL	, gui->swell);
-        gui->myGlitch[gui->L][index].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, gui->blueraise);
         
-        gui->myGlitch[gui->L][index].generateFx();
-        
-        //FBOの描画
-        gui->fbo[gui->L][index]->draw(0, 0,1125,ofGetHeight());
+        if(flg){//巻き戻し再生ON
+            index += (bufferSize/2)-number;
+            if(index >= bufferSize){//バッファの大きさ以上になってしまったら
+                index = index - bufferSize;
+            }
+             number += 8;
+            if(number >= (bufferSize/2)){//戻したい過去まで巻き戻したら
+                flg = false;
+                
+            }
+        }
+        cout << "現在のindex = " << index << endl;
+        cout << "現在のnumber = " << number << endl;
+
+
+
+       
+        //FBOの描画全般
+        gui->DrawFBO(gui->L,index);
         
         counter ++;//描画の開始からインクリメント
         
         if(counter == bufferSize){//バッファサイズまで再生が完了したら
             gui->DrawFlg[gui->L] = false;
             counter = 0;
+            flg = true;
+            number = 0;
         }
     }
 

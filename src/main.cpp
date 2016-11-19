@@ -8,19 +8,22 @@
 int main( ){
 	ofGLFWWindowSettings settings;
 
+    //mirror 1
 	settings.width = 500;
 	settings.height = 750;
 	settings.setPosition(ofVec2f(300,0));
 	settings.resizable = true;
 	shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
 
-	settings.width = 540;
+    //GUI
+	settings.width = 640;
 	settings.height = 720;
 	settings.setPosition(ofVec2f(0,0));
 	settings.resizable = false;
     settings.shareContextWith = mainWindow;
 	shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
     
+    //mirror 2
     settings.width = 500;
     settings.height = 750;
     settings.setPosition(ofVec2f(300,0));
