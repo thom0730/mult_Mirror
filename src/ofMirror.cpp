@@ -39,19 +39,8 @@ void ofMirror::draw(){
             index = buf-(bufferSize/2);//単純に任意のフレーム前
         }
         
-        //グリッチ各種
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CONVERGENCE,gui->convergence);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SHAKER	, gui->shaker);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CUTSLIDER	, gui->cutslider);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_NOISE	, gui->noise);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SLITSCAN	, gui->slitscan);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SWELL	, gui->swell);
-        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, gui->blueraise);
-        
-        gui->myGlitch[gui->R][index].generateFx();
-
-
-        gui->fbo[gui->R][index]->draw(0, 0,1125,ofGetHeight());
+        //FBOの描画全般
+        gui->DrawFBO(gui->R,index);
         
         counter ++;//描画の開始からインクリメント
         

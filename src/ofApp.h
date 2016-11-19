@@ -24,8 +24,11 @@ class ofApp : public ofBaseApp{
 		
 		shared_ptr<GuiApp> gui;
     
-    int counter = 0;
-    int index = 0;
+    int counter = 0;//遅延処理の開始から終了までを管理
+    int index = 0;//遅延処理のバッファのインデックス
+    
+    int number = 0;
+    bool flg = true;//エフェクトの切り替え(巻き戻し->遅延)
    
     
     

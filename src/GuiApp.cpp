@@ -36,7 +36,7 @@ void GuiApp::setup(){
     }
     
     //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(0);
+     vidGrabber[0].setDeviceID(1);
      vidGrabber[0].initGrabber(camWidth, camHeight);
      vidGrabber[1].setDeviceID(2);
      vidGrabber[1].initGrabber(camWidth, camHeight);
@@ -49,15 +49,18 @@ void GuiApp::setup(){
     check.listDevices();
     
 
-    
+    //Glitchとエフェクトの準備
     for(int i = 0; i< camNUM;i++){
         for(int j = 0 ; j < bufferSize ; j++){
              fbo[i][j] = new ofFbo();
             //FBOの準備
             fbo[i][j]->allocate(camWidth, camHeight, GL_RGB);
             myGlitch[i][j].setup(fbo[i][j]);
+            
         }
     }
+    
+    
 }
 //--------------------------------------------------------------
 void GuiApp::update(){
@@ -197,5 +200,20 @@ void GuiApp::Memory(int camera){
     vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
     fbo[camera][index]->end();
     
+    
+}
+void GuiApp::DrawFBO(int LorR,int i){
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CONVERGENCE,convergence);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SHAKER	, shaker);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CUTSLIDER	, cutslider);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_NOISE	, noise);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SLITSCAN	, slitscan);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_SWELL	, swell);
+    myGlitch[LorR][i].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, blueraise);
+    
+    myGlitch[LorR][i].generateFx();
+    
+    //FBOの描画
+    fbo[LorR][i]->draw(0, 0,1125,ofGetHeight());
     
 }
