@@ -65,7 +65,7 @@ void GuiApp::setup(){
         capBytes[cam] = capW[cam] * capH[cam] * 3;
         
         // Create capture buffer
-        videoBuf[cam] = (unsigned char *) malloc ( capBytes[cam] * bufferSize );
+        videoBuf[cam] = (unsigned char *) malloc ( capBytes[cam] * BufferSize );
         
         // Create FBO & Glitch & Tex
         oneFbo[cam] = new ofFbo();
@@ -222,7 +222,7 @@ void GuiApp::Black(){
 }
 //--------------------------------------------------------------
 void GuiApp::Memory(int camera){
-    int index = buffer%bufferSize ;
+    int index = buffer%BufferSize ;
     //FBOの準備
    // fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
     //FBOに書き込む
