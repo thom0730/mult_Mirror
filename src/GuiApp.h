@@ -7,7 +7,7 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define bufferSize 400
+#define BufferSize 1800
 
 class GuiApp: public ofBaseApp {
 public:

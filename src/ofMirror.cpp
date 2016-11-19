@@ -23,7 +23,7 @@ void ofMirror::setup(){
 void ofMirror::update(){
     gui->UpdateFBO(gui->R,index);
     
-    if(counter == 3*bufferSize/4){
+    if(counter == 3*BufferSize/4){
         beatsound.play();
     }
 }
@@ -38,7 +38,7 @@ void ofMirror::draw(){
     if(gui->startR){
         gui->vidGrabber[gui->R].draw(0,0,1125,ofGetHeight());
         startCount++;
-        if(startCount>bufferSize/4){//だいたいこんなもん?
+        if(startCount>BufferSize/4){//だいたいこんなもん?
             gui->startR = false;//「0.現在」を抜ける
             gui->DrawFlg[gui->R] = true;//イントロの開始
             startCount = 0; //エフェクトスタートのトリガーのリセット
@@ -48,22 +48,22 @@ void ofMirror::draw(){
     //---------0.イントロ(準備)---------
     if(gui->DrawFlg[gui->R]){
       
-        int buf = gui->buffer%bufferSize;//バッファサイズを置換0~1799
+        int buf = gui->buffer%BufferSize;//バッファサイズを置換0~1799
         
-        if(buf<(bufferSize/2)){//格納バッファの半分前
-            index = bufferSize+(buf-bufferSize/2); //バッファサイズで補正
+        if(buf<(BufferSize/2)){//格納バッファの半分前
+            index = BufferSize+(buf-BufferSize/2); //バッファサイズで補正
         }else{
-            index = buf-(bufferSize/2);//単純に任意のフレーム前
+            index = buf-(BufferSize/2);//単純に任意のフレーム前
         }
         //------------1.巻き戻し----------------
         //巻き戻し再生の開始
         if(flg){
-            index += (bufferSize/2)-number;
-            if(index >= bufferSize){//バッファの大きさ以上になってしまったら
-                index = index - bufferSize;
+            index += (BufferSize/2)-number;
+            if(index >= BufferSize){//バッファの大きさ以上になってしまったら
+                index = index - BufferSize;
             }
             number += 5;
-            if(number >= (bufferSize/2)){//戻したい過去まで巻き戻したら
+            if(number >= (BufferSize/2)){//戻したい過去まで巻き戻したら
                 flg = false;
                 
             }
@@ -80,17 +80,17 @@ void ofMirror::draw(){
         
         
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 3*bufferSize/4){
-            ofSetColor(0, 0, 0, counter%(3*bufferSize/4));
+        if(counter > 3*BufferSize/4){
+            ofSetColor(0, 0, 0, counter%(3*BufferSize/4));
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(3*bufferSize/4));
+            ofSetColor(255,255, 255, counter%(3*BufferSize/4));
             gui->vidGrabber[gui->R].draw(0,0,1125,ofGetHeight());
         }
         
         //-------------終了処理--------------
-        if(counter == bufferSize){//バッファサイズまで再生が完了したら
+        if(counter == BufferSize){//バッファサイズまで再生が完了したら
             gui->DrawFlg[gui->R] = false;
             counter = 0;
             flg = true;

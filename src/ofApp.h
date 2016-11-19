@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "GuiApp.h"
+#include "ofxProcessFFT.h"
 
 class ofApp : public ofBaseApp{
 
@@ -33,6 +34,9 @@ class ofApp : public ofBaseApp{
     bool flg = true; //エフェクトの切り替え(巻き戻し->遅延)
     
     ofSoundPlayer beatsound;
+    
+    ProcessFFT fft;
+    
     
    
     
