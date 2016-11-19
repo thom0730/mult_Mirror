@@ -9,6 +9,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+        void stop();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -26,9 +27,13 @@ class ofApp : public ofBaseApp{
     
     int counter = 0;//遅延処理の開始から終了までを管理
     int index = 0;//遅延処理のバッファのインデックス
+    int startCount = 0;
     
     int number = 0;
-    bool flg = true;//エフェクトの切り替え(巻き戻し->遅延)
+    bool flg = true; //エフェクトの切り替え(巻き戻し->遅延)
+    
+    ofSoundPlayer beatsound;
+    
    
     
     

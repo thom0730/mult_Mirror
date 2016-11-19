@@ -32,13 +32,12 @@ void GuiApp::setup(){
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].setVerbose(true);//カメラの準備
         DrawFlg[i] = false;//フラグの初期化
-
     }
     
     //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(1);
+     vidGrabber[0].setDeviceID(0);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(2);
+     vidGrabber[1].setDeviceID(1);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -56,7 +55,6 @@ void GuiApp::setup(){
             //FBOの準備
             fbo[i][j]->allocate(camWidth, camHeight, GL_RGB);
             myGlitch[i][j].setup(fbo[i][j]);
-            
         }
     }
     
@@ -129,6 +127,11 @@ void GuiApp::keyPressed(int key){
        
     }
     
+    //映像演出のスタート
+    if(key == 'z'){
+        start = true;
+    }
+    
     //投影カメラの切り替え
     if(key == 'o'){
         if(L == 0){
@@ -146,6 +149,14 @@ void GuiApp::keyPressed(int key){
         }
         
     }
+    
+    ////////////////デバッグ////////////////
+    if(key == 'm'){
+        blackFlg = true;
+        center = ofGetHeight()/2;
+
+    }
+    /////////////////////////////////////
 }
 
 //--------------------------------------------------------------
@@ -185,9 +196,10 @@ void GuiApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void GuiApp::Black(){
-    ofSetColor(0);
-    for(int i = 0 ; i < 3 ; i++){
-        ofRect(2*i*ofGetWidth()/6, 0,ofGetWidth()/6,ofGetHeight());
+    if(blackFlg){
+        ofSetColor(0);
+        center = center -2;
+        ofDrawCircle(ofGetWidth()/2, center, ofGetWidth());
     }
 }
 //--------------------------------------------------------------

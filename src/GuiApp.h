@@ -7,7 +7,7 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define bufferSize 1800
+#define bufferSize 400
 //映像レイヤーエフェクトの数
 #define movNum 3
 
@@ -28,6 +28,8 @@ public:
     
     //メモリ管理の関数
     void Memory(int camera);
+    bool start = false;
+    
     //格納の経過をカウンター。実際はこれをBufferSizeで割ったあまりを用いる。
     int buffer = 0;
     bool DrawFlg[camNUM];
@@ -56,6 +58,8 @@ public:
     
     //画面エフェクト
     void Black();
+    bool blackFlg = false;
+    int center = 0;
     
    
 };

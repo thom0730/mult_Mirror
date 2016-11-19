@@ -2,7 +2,7 @@
 //  ofMirror.hpp
 //  multiWindowExample
 //
-//  Created by 諸星智也 on 2016/11/15.
+//  Created by Ë´∏ÊòüÊô∫‰πü on 2016/11/15.
 //
 //
 
@@ -23,7 +23,14 @@ public:
     
     int counter = 0;
     int index = 0;
-
+    
+    int number = 0;
+    bool flg = true;//エフェクトの切り替え(巻き戻し->遅延)
+    
+    ofSoundPlayer beatsound;
+    
+    
+    
 };
 
 #endif /* ofMirror_hpp */
