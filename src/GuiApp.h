@@ -6,6 +6,8 @@
 
 //カメラの台数
 #define camNUM 2
+//30fps*30s=900
+#define bufferSize 600
 
 class GuiApp: public ofBaseApp {
 public:
@@ -22,21 +24,28 @@ public:
 	ofParameter<ofColor> color;
 	ofxPanel gui;
     
-    void FboUpdate(int camera);//FBOの格納
-    void FboDraw(int camera);//FBOの描画
-    void stop(int number); //描画の停止用関数
+    //メモリ管理の関数
+    void Memory(int camera);
+    //格納の経過をカウンター。実際はこれをBufferSizeで割ったあまりを用いる。
+    int buffer = 0;
+    bool DrawFlg[camNUM];
     
     ofVideoGrabber vidGrabber[camNUM];
     ofVideoGrabber check;//カメラのIDの確認用
     int camWidth , camHeight;//動画の描画の縦横の長さ
-    vector<ofFbo*> fbo[camNUM];//それぞれの動画のFBOを定義
+    ofFbo* fbo[camNUM][bufferSize];//それぞれの動画のFBOを定義
     
-    bool RecFlg[camNUM];
-    bool DrawFlg[camNUM];
-    int counter[camNUM];
     
     //グリッチのインスタンス
-    vector<ofxPostGlitch> myGlitch[camNUM];
+    ofxPostGlitch myGlitch[camNUM][bufferSize];
+    bool convergence = false;
+    bool shaker = false;
+    bool cutslider = false;
+    bool noise = false;
+    bool slitscan = false;
+    bool swell = false;
+    bool blueraise = false;
+    
     
     //カメラの左右の切り替え
     int L = 0;

@@ -10,7 +10,8 @@
 
 //--------------------------------------------------------------
 void ofMirror::setup(){
-    ofBackground(255);
+    ofBackground(0);
+    ofSetFrameRate(30);
     ofSetCircleResolution(200);
     
     
@@ -24,17 +25,41 @@ void ofMirror::update(){
 
 //--------------------------------------------------------------
 void ofMirror::draw(){
+    ofBackground(0);
     
     
-    
+    //フラグがたっている間は遅延処理
     if(gui->DrawFlg[gui->R]){
-        if(counter < gui->fbo[gui->R].size()){
-            gui->fbo[gui->R][counter]->draw(0, 0,1125,ofGetHeight());
-            cout << "デバッグ " << counter <<endl;
+        int buf = gui->buffer%bufferSize;//0~1799
+        
+        
+        if(buf<(bufferSize/2)){
+            index = bufferSize+(buf-bufferSize/2); //バッファサイズで補正
         }else{
+            index = buf-(bufferSize/2);//単純に任意のフレーム前
+        }
+        
+        //グリッチ各種
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CONVERGENCE,gui->convergence);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SHAKER	, gui->shaker);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CUTSLIDER	, gui->cutslider);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_NOISE	, gui->noise);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SLITSCAN	, gui->slitscan);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_SWELL	, gui->swell);
+        gui->myGlitch[gui->R][index].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, gui->blueraise);
+        
+        gui->myGlitch[gui->R][index].generateFx();
+
+
+        gui->fbo[gui->R][index]->draw(0, 0,1125,ofGetHeight());
+        
+        counter ++;//描画の開始からインクリメント
+        
+        if(counter == bufferSize){//バッファサイズまで再生が完了したら
+            gui->DrawFlg[gui->R] = false;
             counter = 0;
         }
-    }
-    counter ++ ;
+
+    }   
     
 }

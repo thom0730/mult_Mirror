@@ -30,9 +30,9 @@ void GuiApp::setup(){
     
     
     for(int i = 0 ; i < camNUM; i++){
-        vidGrabber[i].setVerbose(true);
-       // vidGrabber[i].setDeviceID(i);
-       // vidGrabber[i].initGrabber(camWidth, camHeight);
+        vidGrabber[i].setVerbose(true);//カメラの準備
+        DrawFlg[i] = false;//フラグの初期化
+
     }
     
     //カメラのIDは直接入力が良さそう
@@ -48,27 +48,29 @@ void GuiApp::setup(){
     check.setVerbose(true);
     check.listDevices();
     
+
     
-    //FBOの準備
-    for(int i = 0;i<camNUM;i++){
-        DrawFlg[i] = false;//フラグの初期化
-        RecFlg[i] = false;//フラグの初期化
-        counter[i] = 0;
+    for(int i = 0; i< camNUM;i++){
+        for(int j = 0 ; j < bufferSize ; j++){
+             fbo[i][j] = new ofFbo();
+            //FBOの準備
+            fbo[i][j]->allocate(camWidth, camHeight, GL_RGB);
+            myGlitch[i][j].setup(fbo[i][j]);
+        }
     }
-    
 }
 //--------------------------------------------------------------
 void GuiApp::update(){
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].update();
     }
-    //FBOへの格納
+    
+    //バッファに常に書き込む
     for(int i = 0 ; i < camNUM;i++){
-        if(RecFlg[i]){
-            FboUpdate(i);
-            cout << "FBOカクノウ" << endl;
-        }
+        Memory(i);
     }
+    buffer ++;
+
     
 }
 //--------------------------------------------------------------
@@ -81,56 +83,47 @@ void GuiApp::draw(){
         vidGrabber[i].draw(0,i*camHeight);
     }
     
-    //FBOの描画
-    for(int i = 0 ; i < camNUM;i++){
-        if(DrawFlg[i]){
-            cout << i << endl;
-           FboDraw(i);
-        }
-        
-    }
-
 }
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
     
-    //カメラ1
-    if (key == 'z' || key == 'Z'){
-        RecFlg[0] = true; //録音の開始
-    }
+    //描画の開始
     if(key == '1'){
-        DrawFlg[0] = true ; //描画の開始
-    }
-    //カメラ2
-    if (key == 'x' || key == 'X'){
-        RecFlg[1] = true; //録音の開始
+        DrawFlg[0] = true ;
+       
     }
     if(key == '2'){
-        DrawFlg[1] = true ; //描画の開始
+        DrawFlg[1] = true ;
     }
-   
     
-    
-}
-
-//--------------------------------------------------------------
-void GuiApp::keyReleased(int key){
-    
-    //カメラ(FBO)の処理
-    
-    //カメラ1
-    if (key == 'z' || key == 'Z'){
-        RecFlg[0] = false; //録音の停止
+    //グリッチの切り替え
+    if(key == 'q'){
+        convergence = true;
+        
     }
-    if(key == '1'){
-        stop(0);
+    if(key == 'w'){
+        shaker = true;
+       
     }
-    //カメラ2
-    if (key == 'x' || key == 'X'){
-        RecFlg[1] = false; //録音の停止
+    if(key == 'e'){
+        cutslider = true;
+        
     }
-    if(key == '2'){
-        stop(1);
+    if(key == 'r'){
+        noise = true;
+        
+    }
+    if(key == 't'){
+        slitscan = true;
+       
+    }
+    if(key == 'y'){
+        swell = true;
+        
+    }
+    if(key == 'u'){
+        blueraise = true;
+       
     }
     
     //投影カメラの切り替え
@@ -150,60 +143,59 @@ void GuiApp::keyReleased(int key){
         }
         
     }
-    
-    
-    
-    //グリッチ加工の処理
-    
 }
+
 //--------------------------------------------------------------
-void GuiApp::FboUpdate(int camera){
-    
-    fbo[camera].push_back(new ofFbo);//任意のカメラのFBOにバッファを追加
-    int num = fbo[camera].size()-1;
-    fbo[camera][num]->allocate(camWidth, camHeight, GL_RGB); //FBOの準備
-    //FBOの書き込み
-    fbo[camera][num]->begin();
-    vidGrabber[camera].draw(0, 0, fbo[camera][num]->getWidth(), fbo[camera][num]->getHeight());
-    fbo[camera][num]->end();
-    
-    
-    /*//グリッジ
-    myGlitch[camera].push_back(*new ofxPostGlitch);//グリッチ用のインスタンスをカメラ番号の動的配列に格納
-    myGlitch[camera][num].setup(fbo[camera][num]);//初期化
-    //エフェクトの指定
-    myGlitch[camera][num].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, true);*/
-    
-}
-//--------------------------------------------------------------
-void GuiApp::stop(int number){
-    DrawFlg[number] = false ;
-    counter[number] = 0;
-    fbo[number].clear();
-}
-//--------------------------------------------------------------
-void GuiApp::FboDraw(int camera){
-    int position = camera + 1;//生成位置の指定(最終的には必要ない処理)
-    if(counter[camera] < fbo[camera].size()){
-    
-        fbo[camera][counter[camera]]->draw(position*camWidth,camHeight);
+void GuiApp::keyReleased(int key){
+    //グリッチの切り替え
+    if(key == 'q'){
+        convergence = false;
         
-        cout << "FBO描画" << endl;
-    }else{
-        stop(camera);
+    }
+    if(key == 'w'){
+        shaker = false;
+        
+    }
+    if(key == 'e'){
+        cutslider = false;
+        
+    }
+    if(key == 'r'){
+        noise = false;
+        
+    }
+    if(key == 't'){
+        slitscan = false;
+        
+    }
+    if(key == 'y'){
+        swell = false;
+        
+    }
+    if(key == 'u'){
+        blueraise = false;
+        
     }
     
-    counter[camera]++;
-    
-    
-    
+ 
 }
+
 //--------------------------------------------------------------
 void GuiApp::Black(){
     ofSetColor(0);
     for(int i = 0 ; i < 3 ; i++){
         ofRect(2*i*ofGetWidth()/6, 0,ofGetWidth()/6,ofGetHeight());
     }
-
+}
+//--------------------------------------------------------------
+void GuiApp::Memory(int camera){
+    int index = buffer%bufferSize ;
+    //FBOの準備
+   // fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
+    //FBOに書き込む
+    fbo[camera][index]->begin();
+    vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
+    fbo[camera][index]->end();
+    
     
 }
