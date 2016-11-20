@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "GuiApp.h"
+#include "ofxProcessFFT.h"
 
 class ofMirror: public ofBaseApp {
 public:
@@ -29,6 +30,10 @@ public:
     bool flg = true;//エフェクトの切り替え(巻き戻し->遅延)
     
     ofSoundPlayer beatsound;
+    
+    ProcessFFT fft;
+    
+   // void Trigger();
     
 
     

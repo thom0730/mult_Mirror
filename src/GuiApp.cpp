@@ -171,7 +171,7 @@ void GuiApp::keyPressed(int key){
     ////////////////デバッグ////////////////
     if(key == 'm'){
         blackFlg = true;
-        center = ofGetHeight()*2;
+        center = ofGetHeight();
 
     }
     /////////////////////////////////////
@@ -223,13 +223,7 @@ void GuiApp::Black(){
 //--------------------------------------------------------------
 void GuiApp::Memory(int camera){
     int index = buffer%BufferSize ;
-    //FBOの準備
-   // fbo[camera][index]->allocate(camWidth, camHeight, GL_RGB);
-    //FBOに書き込む
-    /*fbo[camera][index]->begin();
-    vidGrabber[camera].draw(0, 0, fbo[camera][index]->getWidth(), fbo[camera][index]->getHeight());
-    fbo[camera][index]->end();*/
-    
+
     // Store to pixel buffer
     unsigned char* src = vidGrabber[camera].getPixels().getData();
     int pos = index * capBytes[camera];
@@ -247,9 +241,6 @@ void GuiApp::UpdateFBO(int camera, int index)
     // mem to texture
     int pos = index * capBytes[camera];
     oneTex[camera].loadData( videoBuf[camera]+pos, capW[camera], capH[camera], GL_RGB);
-    
-    //    oneFbo[camera]->attachTexture(oneTex[camera], GL_RGB, GL_COLOR_ATTACHMENT0);
-    //    oneTex[camera].draw( 0, 0, capW[camera], capH[camera]);
     oneTex[camera].draw( 0, 0);
     
     oneFbo[camera]->end();
