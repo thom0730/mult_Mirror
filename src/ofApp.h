@@ -35,8 +35,10 @@ class ofApp : public ofBaseApp{
     
     ofSoundPlayer beatsound;
     
+    
     ProcessFFT fft;
     
+    void Trigger();
     
    
     

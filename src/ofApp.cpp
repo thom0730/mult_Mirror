@@ -19,6 +19,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    Trigger();
     gui->UpdateFBO(gui->L,index);
     fft.update();
     float low = fft.getLowVal();
@@ -30,14 +31,17 @@ void ofApp::update(){
     cout << "high " << high << endl;
      */
 
-    if(counter == 3*BufferSize/4){
+    
+    //心拍音の再生とエフェクト同期
+    if(counter == 6*BufferSize/10){
         beatsound.play();
     }
-    
-    if(low > 0.05){
-        gui->noise = true;
+    if(low > 0.01){
+        gui->shaker = true;
+        gui->slitscan = true;
     }else{
-        gui->noise = false;
+        gui->shaker = false;
+        gui->slitscan = false;
     }
     
   
@@ -58,6 +62,7 @@ void ofApp::draw(){
             gui->startL = false;//「0.現在」を抜ける
             gui->DrawFlg[gui->L] = true;//イントロの開始
             startCount = 0; //エフェクトスタートのトリガーのリセット
+            
         }
     }
     
@@ -75,34 +80,32 @@ void ofApp::draw(){
         //巻き戻し再生の開始
         if(flg){
             index += (BufferSize/2)-number;
-            if(index >= BufferSize){//バッファの大きさ以上になってしまったら
+            if(index >= BufferSize){//バッファの大きさ以上になってしまったら(補正)
                 index = index - BufferSize;
             }
-             number += 5;
+             number += 10; //巻き戻し用
             if(number >= (BufferSize/2)){//戻したい過去まで巻き戻したら
                 flg = false;
-                
             }
         }
+    
+
         //------------2.描画/エフェクト----------------
         //FBOの描画全般
         gui->DrawFBO(gui->L,index);
-
         gui->Black();
         
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
-            cout << "デバッグ" << endl;
         }
-        
- 
+
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 3*BufferSize/4){
-            ofSetColor(0, 0, 0, counter%(3*BufferSize/4));
+        if(counter > 6*BufferSize/10){
+            ofSetColor(0, 0, 0, counter%(6*BufferSize/10));
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
  
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(3*BufferSize/4));
+            ofSetColor(255,255, 255, counter%(6*BufferSize/10));
             gui->vidGrabber[gui->L].draw(0,0,1125,ofGetHeight());
         }
 
@@ -177,4 +180,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::stop(){
     beatsound.stop();
     
+}
+//--------------------------------------------------------------
+void ofApp::Trigger(){
+    if(counter == 0 ){ //counterが0の時点では動画セットは再生していない
+        int i  = ofRandom(1000);
+        if(i == 2){
+            gui->startL = true;
+            gui->startR = true;
+        }
+    }
 }
