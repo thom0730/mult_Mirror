@@ -27,7 +27,7 @@ int main( ){
     settings.width = 500;
     settings.height = 750;
     settings.setPosition(ofVec2f(300,0));
-    settings.resizable = false;
+    settings.resizable = true;
     shared_ptr<ofAppBaseWindow> mirrorWindow = ofCreateWindow(settings);
 
 	shared_ptr<ofApp> mainApp(new ofApp);

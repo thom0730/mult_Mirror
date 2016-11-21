@@ -60,10 +60,10 @@ void ofMirror::draw(){
     
     //------------現在------------------
     if(gui->startR){
-        gui->vidGrabber[gui->R].draw(0,0,1125,ofGetHeight());
+        gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
         startCount++;
         if(startCount>BufferSize/4){//だいたいこんなもん?
-            gui->startL = false;//「0.現在」を抜ける
+            gui->startR = false;//「0.現在」を抜ける
             gui->DrawFlg[gui->R] = true;//イントロの開始
             startCount = 0; //エフェクトスタートのトリガーのリセット
             
