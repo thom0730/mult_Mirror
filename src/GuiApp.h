@@ -69,6 +69,9 @@ public:
     bool blackFlg = false;
     int center = 0;
     
+    //とりあえずランダムのエフェクトを生成
+    void effectSwitch();
+    
    
 };
 

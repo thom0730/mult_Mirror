@@ -37,7 +37,7 @@ void GuiApp::setup(){
     //カメラのIDは直接入力が良さそう
      vidGrabber[0].setDeviceID(0);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(1);
+     vidGrabber[1].setDeviceID(2);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -259,5 +259,84 @@ void GuiApp::DrawFBO(int camera, int index){
     oneGlitch[camera].generateFx();
     
     //FBOの描画
-   oneFbo[camera]->draw(0, 0,1125,ofGetHeight());
+   oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
+}
+//--------------------------------------------------------------
+void GuiApp::effectSwitch(){
+    int i = ofRandom(600);
+    cout << "ランダム   " << i << endl;
+     //グリッチの切り替え
+    if(i == 1){
+        if(convergence){
+            convergence = false;
+        }else
+        convergence = true;
+        
+    }
+    if(i == 2){
+        if(shaker){
+            shaker = false;
+        }else
+        shaker = true;
+        
+        
+    }
+    if(i == 3){
+        if(cutslider){
+            cutslider = false;
+        }else
+        cutslider = true;
+        
+    }
+    if(i == 4){
+        if(noise){
+            noise = false;
+        }else
+        noise = true;
+       
+    }
+    if(i == 5){
+        if(slitscan){
+            slitscan = false;
+        }else
+        slitscan = true;
+       
+        
+    }
+    if(i == 6 || i == 16){
+        if(swell){
+            swell = false;
+        }else
+        swell = true;
+        
+        
+    }
+   /* if(i == 7){
+        if(blueraise){
+            blueraise = false;
+        }else
+        blueraise = true;
+        
+        
+    }*/
+    
+    //投影カメラの切り替え
+    if(i == 8 || i == 19){
+        if(L == 0){
+            L = 1;
+        }else{
+            L = 0;
+        }
+    }
+    
+    if(i == 9){
+        if(R == 0){
+            R = 1;
+        }else{
+            R = 0;
+        }
+        
+    }
+
+    
 }

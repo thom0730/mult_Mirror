@@ -56,7 +56,7 @@ void ofApp::draw(){
     
     //------------現在------------------
     if(gui->startL){
-        gui->vidGrabber[gui->L].draw(0,0,1125,ofGetHeight());
+        gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         startCount++;
         if(startCount>BufferSize/4){//だいたいこんなもん?
             gui->startL = false;//「0.現在」を抜ける
@@ -92,11 +92,26 @@ void ofApp::draw(){
 
         //------------2.描画/エフェクト----------------
         //FBOの描画全般
+        //エフェクトのスイッチ
+        gui->effectSwitch();
+        if(counter%12==0){
+            gui->convergence = false;
+            gui->shaker = false;
+            gui-> cutslider = false;
+            gui-> noise = false;
+            gui-> slitscan = false;
+            gui-> swell = false;
+            gui-> blueraise = false;
+
+            
+        }
         gui->DrawFBO(gui->L,index);
         gui->Black();
         
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
+            gui->L = 0;
+            gui->R = 1;
         }
 
         //-----------3.アウトロ(レイヤーが重なっていく)------------
