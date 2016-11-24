@@ -73,6 +73,14 @@ void GuiApp::setup(){
         oneGlitch[cam].setup(oneFbo[cam]);
         oneTex[cam].allocate(capW[cam], capH[cam], GL_RGB);
     }
+    for(int i = 0; i< effectNUM ; i ++){
+        shader[i]=false;
+        
+    }
+    //エフェクト生成のフラグの初期化
+    for(int i = 0 ; i <effectNUM ;i++){
+        effectFlg[i]=0;
+    }
 
     
     
@@ -105,6 +113,7 @@ void GuiApp::draw(){
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
     
+    //いかデバッグ用
     //描画の開始
     if(key == '1'){
         DrawFlg[0] = true ;
@@ -116,33 +125,30 @@ void GuiApp::keyPressed(int key){
     
     //グリッチの切り替え
     if(key == 'q'){
-        convergence = true;
+        shader[0] = true;
         
     }
     if(key == 'w'){
-        shaker = true;
+        shader[1] = true;
        
     }
     if(key == 'e'){
-        cutslider = true;
+        shader[2] = true;
         
     }
     if(key == 'r'){
-        noise = true;
+        shader[3] = true;
         
     }
     if(key == 't'){
-        slitscan = true;
+        shader[4] = true;
        
     }
     if(key == 'y'){
-        swell = true;
+        shader[5] = true;
         
     }
-    if(key == 'u'){
-        blueraise = true;
-       
-    }
+
     
     //映像演出のスタート
     if(key == 'z'){
@@ -168,11 +174,14 @@ void GuiApp::keyPressed(int key){
         
     }
     
-    ////////////////デバッグ////////////////
+    ////////////////黒系のエフェクト////////////////
     if(key == 'm'){
         blackFlg = true;
-        center = ofGetHeight();
+       // center = ofGetHeight();
 
+    }
+    if(key == 'n'){
+        blackCircle = true;
     }
     /////////////////////////////////////
 }
@@ -181,43 +190,44 @@ void GuiApp::keyPressed(int key){
 void GuiApp::keyReleased(int key){
     //グリッチの切り替え
     if(key == 'q'){
-        convergence = false;
+        shader[0] = false;
         
     }
     if(key == 'w'){
-        shaker = false;
+        shader[1] = false;
         
     }
     if(key == 'e'){
-        cutslider = false;
+        shader[2] = false;
         
     }
     if(key == 'r'){
-        noise = false;
+        shader[3] = false;
         
     }
     if(key == 't'){
-        slitscan = false;
+        shader[4] = false;
         
     }
     if(key == 'y'){
-        swell = false;
-        
-    }
-    if(key == 'u'){
-        blueraise = false;
+        shader[5] = false;
         
     }
     
- 
 }
 
 //--------------------------------------------------------------
 void GuiApp::Black(){
     if(blackFlg){
         ofSetColor(0);
-        center = center -2;
-        ofDrawCircle(ofGetWidth()/2, center, ofGetWidth());
+        BlackStart = BlackStart -2;
+        ofDrawCircle(ofGetWidth()/2, BlackStart, ofGetWidth());
+    }
+    if(blackCircle){
+        ofSetColor(0);
+        circleRadius += 2;
+        ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2,circleRadius );
+        
     }
 }
 //--------------------------------------------------------------
@@ -248,13 +258,12 @@ void GuiApp::UpdateFBO(int camera, int index)
 }
 void GuiApp::DrawFBO(int camera, int index){
         
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_CONVERGENCE,convergence);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_SHAKER	, shaker);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_CUTSLIDER	, cutslider);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_NOISE	, noise);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_SLITSCAN	, slitscan);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_SWELL	, swell);
-    oneGlitch[camera].setFx(OFXPOSTGLITCH_CR_BLUERAISE	, blueraise);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_CONVERGENCE,shader[0]);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SHAKER	, shader[1]);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_CUTSLIDER	, shader[2]);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_NOISE	, shader[3]);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SLITSCAN	, shader[4]);
+    oneGlitch[camera].setFx(OFXPOSTGLITCH_SWELL	, shader[5]);
     
     oneGlitch[camera].generateFx();
     
@@ -262,66 +271,45 @@ void GuiApp::DrawFBO(int camera, int index){
    oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
 }
 //--------------------------------------------------------------
-void GuiApp::effectSwitch(){
+void GuiApp::effectControl(int counter){
     int i = ofRandom(600);
-    cout << "ランダム   " << i << endl;
+   
      //グリッチの切り替え
     if(i == 1){
-        if(convergence){
-            convergence = false;
-        }else
-        convergence = true;
-        
+        if(!shader[0]){
+            shader[0] = true;
+        }
     }
     if(i == 2){
-        if(shaker){
-            shaker = false;
-        }else
-        shaker = true;
-        
-        
+        if(!shader[1]){
+            shader[1] = true;
+        }
     }
     if(i == 3){
-        if(cutslider){
-            cutslider = false;
-        }else
-        cutslider = true;
-        
+        if(!shader[2]){
+            shader[2] = true;
+        }
     }
     if(i == 4){
-        if(noise){
-            noise = false;
-        }else
-        noise = true;
-       
+        if(!shader[3]){
+            shader[3] = true;
+        }
     }
     if(i == 5){
-        if(slitscan){
-            slitscan = false;
-        }else
-        slitscan = true;
-       
-        
+        if(!shader[4]){
+            shader[4] = true;
+        }
     }
-    if(i == 6 || i == 16){
-        if(swell){
-            swell = false;
-        }else
-        swell = true;
-        
-        
+    if(i == 6){
+        if(!shader[5]){
+            shader[5] = true;
+            
+        }
     }
-   /* if(i == 7){
-        if(blueraise){
-            blueraise = false;
-        }else
-        blueraise = true;
-        
-        
-    }*/
-    
+
     //投影カメラの切り替え
     if(i == 8 || i == 19){
+        effectFlg[6] = counter;
         if(L == 0){
             L = 1;
         }else{
@@ -330,6 +318,7 @@ void GuiApp::effectSwitch(){
     }
     
     if(i == 9){
+        effectFlg[7] = counter;
         if(R == 0){
             R = 1;
         }else{
@@ -338,5 +327,16 @@ void GuiApp::effectSwitch(){
         
     }
 
+    //5秒後にOFF
+    for(int i =0 ; i < effectNUM; i++){
+        if(shader[i]){
+            effectFlg[i]++;
+        }
+        if(effectFlg[i]  == 90 ){//30fps*3s=90f
+            shader[i] = false;
+            effectFlg[i] = 0;
+            cout << "エフェクトOFF "<< i << endl;
+        }
+    }
     
 }

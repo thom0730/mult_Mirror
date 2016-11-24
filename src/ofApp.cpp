@@ -37,11 +37,11 @@ void ofApp::update(){
         beatsound.play();
     }
     if(low > 0.01){
-        gui->shaker = true;
-        gui->slitscan = true;
+        gui->shader[1] = true;
+        gui->shader[4] = true;
     }else{
-        gui->shaker = false;
-        gui->slitscan = false;
+        gui->shader[1] = false;
+        gui->shader[4] = false;
     }
     
   
@@ -50,16 +50,21 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(0);
+  //  ofBackground(0);
     ofSetColor(255);
     
     
     //------------現在------------------
     if(gui->startL){
         gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
+        //黒の幕開け
+        ofSetColor(0,0,0,250-startCount);
+        ofDrawRectangle(ofGetWidth()/2 + startCount, 0,ofGetWidth()-(ofGetWidth()/2 + startCount), ofGetHeight());
+        ofDrawRectangle(0, 0,ofGetWidth()/2 - startCount, ofGetHeight());
+        //現在映像の部分のカウンターのインクリメント
         startCount++;
         if(startCount>BufferSize/4){//だいたいこんなもん?
-            gui->startL = false;//「0.現在」を抜ける
+            gui->startL = false;//「現在」を抜ける
             gui->DrawFlg[gui->L] = true;//イントロの開始
             startCount = 0; //エフェクトスタートのトリガーのリセット
             
@@ -93,29 +98,24 @@ void ofApp::draw(){
         //------------2.描画/エフェクト----------------
         //FBOの描画全般
         //エフェクトのスイッチ
-        gui->effectSwitch();
-        if(counter%12==0){
-            gui->convergence = false;
-            gui->shaker = false;
-            gui-> cutslider = false;
-            gui-> noise = false;
-            gui-> slitscan = false;
-            gui-> swell = false;
-            gui-> blueraise = false;
+        gui->effectControl(counter);
 
-            
-        }
         gui->DrawFBO(gui->L,index);
-        gui->Black();
+        
+       // ofSetColor(255,1,1);
+        //ofDrawRectangle(100 , 100, 20,20);
+        
+        //ここで背景色をもとに戻さないといけないっぽい
+        ofSetColor(255);
         
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
-            gui->L = 0;
-            gui->R = 1;
+            cout << "counter " << counter << endl;
         }
 
         //-----------3.アウトロ(レイヤーが重なっていく)------------
         if(counter > 6*BufferSize/10){
+            cout << "END" << endl;
             ofSetColor(0, 0, 0, counter%(6*BufferSize/10));
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
  
@@ -123,6 +123,7 @@ void ofApp::draw(){
             ofSetColor(255,255, 255, counter%(6*BufferSize/10));
             gui->vidGrabber[gui->L].draw(0,0,1125,ofGetHeight());
         }
+        gui->Black();
 
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
@@ -131,6 +132,9 @@ void ofApp::draw(){
             flg = true;
             number = 0;
             beatsound.stop();
+            //黒色エフェクトの停止処理
+            gui->blackCircle = false;
+            gui-> circleRadius = 0;
         }
     }
 }
