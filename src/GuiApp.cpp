@@ -37,7 +37,7 @@ void GuiApp::setup(){
     //カメラのIDは直接入力が良さそう
      vidGrabber[0].setDeviceID(0);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(2);
+     vidGrabber[1].setDeviceID(1);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -308,8 +308,7 @@ void GuiApp::effectControl(int counter){
     }
 
     //投影カメラの切り替え
-    if(i == 8 || i == 19){
-        effectFlg[6] = counter;
+    if(i == 7 || i == 19){
         if(L == 0){
             L = 1;
         }else{
@@ -317,8 +316,7 @@ void GuiApp::effectControl(int counter){
         }
     }
     
-    if(i == 9){
-        effectFlg[7] = counter;
+    if(i == 8){
         if(R == 0){
             R = 1;
         }else{
@@ -335,8 +333,13 @@ void GuiApp::effectControl(int counter){
         if(effectFlg[i]  == 90 ){//30fps*3s=90f
             shader[i] = false;
             effectFlg[i] = 0;
-            cout << "エフェクトOFF "<< i << endl;
+            if(i == 7 || i == 8){ //カメラの位置を戻す
+                L = 0;
+                R = 0;
+                
+            }
         }
+        
     }
     
 }
