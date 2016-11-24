@@ -35,9 +35,9 @@ void GuiApp::setup(){
     }
     
     //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(0);
+     vidGrabber[0].setDeviceID(1);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(1);
+     vidGrabber[1].setDeviceID(2);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -220,12 +220,12 @@ void GuiApp::keyReleased(int key){
 void GuiApp::Black(){
     if(blackFlg){
         ofSetColor(0);
-        BlackStart = BlackStart -2;
+        BlackStart = BlackStart -1;
         ofDrawCircle(ofGetWidth()/2, BlackStart, ofGetWidth());
     }
     if(blackCircle){
         ofSetColor(0);
-        circleRadius += 2;
+        circleRadius += 1;
         ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2,circleRadius );
         
     }
@@ -272,14 +272,14 @@ void GuiApp::DrawFBO(int camera, int index){
 }
 //--------------------------------------------------------------
 void GuiApp::effectControl(int counter){
-    int i = ofRandom(600);
+    int i = ofRandom(1000);
    
      //グリッチの切り替え
-    if(i == 1){
+   /* if(i == 1){
         if(!shader[0]){
             shader[0] = true;
         }
-    }
+    }*/
     if(i == 2){
         if(!shader[1]){
             shader[1] = true;
@@ -300,19 +300,21 @@ void GuiApp::effectControl(int counter){
             shader[4] = true;
         }
     }
-    if(i == 6){
+   /* if(i == 6){
         if(!shader[5]){
             shader[5] = true;
             
         }
-    }
+    }*/
 
     //投影カメラの切り替え
     if(i == 7 || i == 19){
         if(L == 0){
             L = 1;
+            R = 0;
         }else{
             L = 0;
+            R = 1;
         }
     }
     
@@ -330,12 +332,15 @@ void GuiApp::effectControl(int counter){
         if(shader[i]){
             effectFlg[i]++;
         }
-        if(effectFlg[i]  == 90 ){//30fps*3s=90f
-            shader[i] = false;
-            effectFlg[i] = 0;
-            if(i == 7 || i == 8){ //カメラの位置を戻す
+        if(i != 7 || i != 8){
+            if(effectFlg[i]  == 20 ){//30fps*3s=90f
+                shader[i] = false;
+                effectFlg[i] = 0;
+            }else{
+                if(effectFlg[i] == 60){
                 L = 0;
-                R = 0;
+                R = 1;
+                }
                 
             }
         }

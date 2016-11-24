@@ -7,7 +7,7 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define BufferSize 2000
+#define BufferSize 3000
 //エフェクトの数
 #define effectNUM 8
 

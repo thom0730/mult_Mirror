@@ -61,6 +61,9 @@ void ofMirror::draw(){
     //------------現在------------------
     if(gui->startR){
         gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
+        //黒の幕開け
+        ofSetColor(0,0,0,300-startCount);
+        ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
         startCount++;
         if(startCount>BufferSize/4){//だいたいこんなもん?
             gui->startR = false;//「0.現在」を抜ける

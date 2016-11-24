@@ -58,9 +58,8 @@ void ofApp::draw(){
     if(gui->startL){
         gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         //黒の幕開け
-        ofSetColor(0,0,0,250-startCount);
-        ofDrawRectangle(ofGetWidth()/2 + startCount, 0,ofGetWidth()-(ofGetWidth()/2 + startCount), ofGetHeight());
-        ofDrawRectangle(0, 0,ofGetWidth()/2 - startCount, ofGetHeight());
+        ofSetColor(0,0,0,300-startCount);
+        ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
         //現在映像の部分のカウンターのインクリメント
         startCount++;
         if(startCount>BufferSize/4){//だいたいこんなもん?
