@@ -264,7 +264,7 @@ void GuiApp::DrawFBO(int camera, int index){
     oneGlitch[camera].setFx(OFXPOSTGLITCH_NOISE	, shader[3]);
     oneGlitch[camera].setFx(OFXPOSTGLITCH_SLITSCAN	, shader[4]);
     oneGlitch[camera].setFx(OFXPOSTGLITCH_SWELL	, shader[5]);
-    
+    //Glitchの追加
     oneGlitch[camera].generateFx();
     
     //FBOの描画
