@@ -8,6 +8,8 @@
 #define camNUM 2
 //30fps*30s=900
 #define BufferSize 2000
+//エフェクトの数
+#define effectNUM 8
 
 class GuiApp: public ofBaseApp {
 public:
@@ -51,13 +53,8 @@ public:
     //グリッチのインスタンス
    // ofxPostGlitch myGlitch[camNUM][bufferSize];
     ofxPostGlitch oneGlitch[camNUM];
-    bool convergence = false;
-    bool shaker = false;
-    bool cutslider = false;
-    bool noise = false;
-    bool slitscan = false;
-    bool swell = false;
-    bool blueraise = false;
+    bool shader[effectNUM] ;
+   
     
     
     //カメラの左右の切り替え
@@ -67,7 +64,13 @@ public:
     //画面エフェクト
     void Black();
     bool blackFlg = false;
-    int center = 0;
+    bool blackCircle = false;//日の出エフェクトの中心位置
+    int BlackStart = ofGetHeight()+ofGetWidth(); //日の出エフェクトのy座標の初期位置
+    int circleRadius = 0; //中心から広がる円の半径
+    
+    //とりあえずランダムのエフェクトを生成
+    void effectControl(int counter);
+    int effectFlg[effectNUM];
     
    
 };

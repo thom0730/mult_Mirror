@@ -40,7 +40,6 @@ class ofApp : public ofBaseApp{
     
     void Trigger();
     
-   
-    
+
     
 };
