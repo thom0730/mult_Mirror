@@ -35,7 +35,7 @@ void GuiApp::setup(){
     }
     
     //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(1);
+     vidGrabber[0].setDeviceID(0);
      vidGrabber[0].initGrabber(camWidth, camHeight);
      vidGrabber[1].setDeviceID(2);
      vidGrabber[1].initGrabber(camWidth, camHeight);

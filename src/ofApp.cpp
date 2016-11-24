@@ -56,6 +56,7 @@ void ofApp::draw(){
     
     //------------現在------------------
     if(gui->startL){
+        gui->effectControl(startCount);
         gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         //黒の幕開け
         ofSetColor(0,0,0,300-startCount);
