@@ -25,7 +25,8 @@ int main( ){
 //	settings.height = 720;
 //	settings.setPosition(ofVec2f(0,0));
 //	settings.resizable = false;
-    settings.shareContextWith = mainWindow;
+//  settings.shareContextWith = mainWindow;
+    config.gui.settings.shareContextWith = mainWindow;
 //	shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(config.gui.settings);
     
