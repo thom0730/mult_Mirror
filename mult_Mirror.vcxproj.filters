@@ -67,6 +67,15 @@
     <ClCompile Include="..\..\..\addons\ofxPostGlitch\src\ofxPostGlitch.cpp">
       <Filter>addons\ofxPostGlitch\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\config.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofMirror.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -181,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxPostGlitch\src\ofxPostGlitch.h">
       <Filter>addons\ofxPostGlitch\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofMirror.hpp">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
