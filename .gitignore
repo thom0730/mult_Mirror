@@ -1,3 +1,5 @@
 *.sfk
 *.db
 *.suo
+obj/
+*.opendb
