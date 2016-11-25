@@ -1,1 +1,7 @@
+# SoundForge
 *.sfk
+
+# Xcode
+mult_Mirror.xcodeproj/project.xcworkspace/xcuserdata/makino.xcuserdatad/UserInterfaceState.xcuserstate
+mult_Mirror.xcodeproj/xcuserdata/makino.xcuserdatad/xcschemes/xcschememanagement.plist
+
