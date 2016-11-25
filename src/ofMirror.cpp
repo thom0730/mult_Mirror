@@ -7,6 +7,7 @@
 //
 
 #include "ofMirror.hpp"
+#include "config.h"
 
 //--------------------------------------------------------------
 void ofMirror::setup(){
@@ -50,6 +51,15 @@ void ofMirror::update(){
     }else{
         gui->shaker = false;
     }*/
+    
+    // get window position and size
+    ofRectangle rect = ofGetWindowRect();
+    rect.x = ofGetWindowPositionX();
+    rect.y = ofGetWindowPositionY();
+    
+    // update config
+    config.mirror2.update( rect );
+    
 }
 
 //--------------------------------------------------------------

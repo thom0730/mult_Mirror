@@ -6,6 +6,9 @@
  */
 
 #include "GuiApp.h"
+#include "config.h"
+
+#define CAMERAISNEEDED		(2)
 //--------------------------------------------------------------
 void GuiApp::setup(){
     //GUI関係
@@ -28,24 +31,47 @@ void GuiApp::setup(){
     camWidth = ofGetWidth();
     camHeight = ofGetHeight()/2;
     
+    // log level verbose 
+    ofSetLogLevel(OF_LOG_VERBOSE);
+    
+    //カメラの接続確認
+    check.setVerbose(true);
+    int foundCameras = check.listDevices().size();
+    if(foundCameras < (unsigned int)CAMERAISNEEDED ){
+        ofSetLogLevel(OF_LOG_NOTICE);
+        ofLogError("Error: more USB Camera device needed.");
+        ofExit();
+        return;
+    }
     
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].setVerbose(true);//カメラの準備
         DrawFlg[i] = false;//フラグの初期化
     }
     
-    //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(0);
-     vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(2);
-     vidGrabber[1].initGrabber(camWidth, camHeight);
+    
+//    //カメラのIDは直接入力が良さそう
+//     vidGrabber[0].setDeviceID(0);
+//     vidGrabber[0].initGrabber(camWidth, camHeight);
+//     vidGrabber[1].setDeviceID(2);
+//     vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
     
-    //カメラの接続確認
-    ofSetLogLevel(OF_LOG_VERBOSE);
-    check.setVerbose(true);
-    check.listDevices();
+    // Camera device init
+    vidGrabber[0].setDeviceID( config.cam0.id );
+    if (!vidGrabber[0].initGrabber( config.cam0.capWidth, config.cam0.capHeight )) {
+        ofLogError("Error: camera initGrabber error (0)");
+        std::exit(0);
+        return;
+    }
+    
+    vidGrabber[1].setDeviceID( config.cam1.id );
+    if (!vidGrabber[1].initGrabber( config.cam1.capWidth, config.cam1.capHeight )) {
+        ofLogError("Error: camera initGrabber error (1)");
+        std::exit(0);
+        return;
+    }
     
 
     //Glitchとエフェクトの準備
@@ -82,8 +108,9 @@ void GuiApp::setup(){
         effectFlg[i]=0;
     }
 
-    
-    
+    // ログがうるさいので
+    ofSetLogLevel(OF_LOG_NOTICE);
+
 }
 //--------------------------------------------------------------
 void GuiApp::update(){
@@ -97,7 +124,14 @@ void GuiApp::update(){
     }
     buffer ++;
 
+    // get window position and size
+    ofRectangle rect = ofGetWindowRect();
+    rect.x = ofGetWindowPositionX();
+    rect.y = ofGetWindowPositionY();
     
+    // update config
+    config.gui.update( rect );
+
 }
 //--------------------------------------------------------------
 void GuiApp::draw(){
@@ -172,6 +206,11 @@ void GuiApp::keyPressed(int key){
             R = 0;
         }
         
+    }
+
+    // config save
+    if(key == 's'){
+        config.save();
     }
     
     ////////////////黒系のエフェクト////////////////
