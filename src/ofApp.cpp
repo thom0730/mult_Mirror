@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "config.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -44,7 +45,13 @@ void ofApp::update(){
         gui->shader[4] = false;
     }
     
-  
+    // get window position and size
+    ofRectangle rect = ofGetWindowRect();
+    rect.x = ofGetWindowPositionX();
+    rect.y = ofGetWindowPositionY();
+    
+    // update config
+    config.mirror1.update( rect );
 
 }
 
