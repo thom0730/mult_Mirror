@@ -1,5 +1,14 @@
+# SoundForge 
 *.sfk
+
+# VisualStudio 2015
 *.db
 *.suo
 obj/
 *.opendb
+bin/*.dll
+bin/*.pdb
+bin/*.lib
+bin/*.ilk
+bin/*.exp
+bin/*.exe
