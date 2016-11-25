@@ -37,7 +37,7 @@ void GuiApp::setup(){
     //カメラのIDは直接入力が良さそう
      vidGrabber[0].setDeviceID(0);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(2);
+     vidGrabber[1].setDeviceID(1);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -180,9 +180,7 @@ void GuiApp::keyPressed(int key){
        // center = ofGetHeight();
 
     }
-    if(key == 'n'){
-        blackCircle = true;
-    }
+ 
     /////////////////////////////////////
 }
 
@@ -302,7 +300,7 @@ void GuiApp::effectControl(int counter,bool _flg){
 
     //投影カメラの切り替え
     if(_flg){
-        if(i==5){
+        if(i==6){
             shader[i] =true;//カメラ反転の開始のフラグ
             if(L == 0){
                 L = 1;
@@ -321,7 +319,7 @@ void GuiApp::effectControl(int counter,bool _flg){
         if(shader[i]){
             effectFlg[i]++;
         }
-        if(i != 5){
+        if(i != 6){
             if(effectFlg[i]  == 20 ){//20フレーム後にOFF
                 shader[i] = false;
                 effectFlg[i] = 0;

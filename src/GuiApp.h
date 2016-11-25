@@ -64,9 +64,7 @@ public:
     //画面エフェクト
     void Black();
     bool blackFlg = false;
-    bool blackCircle = false;//日の出エフェクトの中心位置
     int BlackStart = ofGetHeight()+ofGetWidth(); //日の出エフェクトのy座標の初期位置
-    int circleRadius = 0; //中心から広がる円の半径
     
     //とりあえずランダムのエフェクトを生成
     void effectControl(int counter,bool _flg);

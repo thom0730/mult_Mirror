@@ -103,18 +103,23 @@ void ofMirror::draw(){
         
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
+            cout << "counter 2 " << counter << endl;
         }
         
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 6*BufferSize/10){
-            ofSetColor(0, 0, 0, counter%(6*BufferSize/10));
+        if(counter > 7*BufferSize/10){
+            ofSetColor(0, 0, 0, counter%(7*BufferSize/10));
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(6*BufferSize/10));
+            ofSetColor(255,255, 255, counter%(7*BufferSize/10));
             gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
         }
-        
+        //------------------4.暗転-----------------------
+        /* if(counter == BufferSize-(gui->BlackStart)){
+           // gui->Black();
+            ofSetColor(255);
+        }*/
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
             gui->DrawFlg[gui->R] = false;

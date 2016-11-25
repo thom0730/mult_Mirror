@@ -110,7 +110,7 @@ void ofApp::draw(){
         
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
-            cout << "counter " << counter << endl;
+            cout << "counter 1 " << counter << endl;
         }
 
         //-----------3.アウトロ(レイヤーが重なっていく)------------
@@ -124,9 +124,10 @@ void ofApp::draw(){
             gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         }
         //------------------4.暗転-----------------------
-        if(counter == BufferSize-ofGetHeight()){
-            gui->Black();
-        }
+        /*  if(counter == BufferSize-(gui->BlackStart)){
+           // gui->Black();
+            ofSetColor(255);
+        }*/
 
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
