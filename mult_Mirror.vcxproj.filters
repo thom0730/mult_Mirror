@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxGuiGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxLabel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxPanel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSlider.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\src\ofxEasyFft.cpp">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\src\ofxFft.cpp">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\src\ofxFftBasic.cpp">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\src\ofxFftw.cpp">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\src\ofxProcessFFT.cpp">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\libs\kiss\kiss_fft.c">
+      <Filter>addons\ofxFft\libs\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxFft\libs\kiss\kiss_fftr.c">
+      <Filter>addons\ofxFft\libs\kiss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxPostGlitch\src\ofxPostGlitch.cpp">
+      <Filter>addons\ofxPostGlitch\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{ee570a18-d8f7-4790-8b5d-79ad15e23e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui">
+      <UniqueIdentifier>{0df47e32-5009-4809-92ee-74e489f0ee98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui\src">
+      <UniqueIdentifier>{94d9646e-2ca3-449f-8dc1-04777338261f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings">
+      <UniqueIdentifier>{d2db0c72-5dde-4cc1-a309-9e944193d508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\src">
+      <UniqueIdentifier>{8d07d91a-9e42-4b23-b7f5-abda9885f611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\libs">
+      <UniqueIdentifier>{f790f75c-3f23-4407-9b6b-c0317f5fe2e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft">
+      <UniqueIdentifier>{02d08807-b5c7-4a1a-9665-9960b9c19282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft\src">
+      <UniqueIdentifier>{958eed45-faf0-4bab-9364-e23088632c98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft\libs">
+      <UniqueIdentifier>{7b8145c4-7242-4438-9b48-f2041797da93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft\libs\fftw">
+      <UniqueIdentifier>{dba0f6b1-6307-4226-b158-75e1a8cb64b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft\libs\fftw\include">
+      <UniqueIdentifier>{5d53ce77-9212-4451-93c3-40ba8c4882ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFft\libs\kiss">
+      <UniqueIdentifier>{bd2f389b-8226-439b-9ab2-c3bb4f2e41f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxPostGlitch">
+      <UniqueIdentifier>{718064d9-2fb6-4520-a27b-b844cae58cf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxPostGlitch\src">
+      <UniqueIdentifier>{c991f35f-3211-4c01-be6b-cf1b9a7a4333}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxGuiGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxLabel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxPanel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSlider.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\src\ofxEasyFft.h">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\src\ofxFft.h">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\src\ofxFftBasic.h">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\src\ofxFftw.h">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\src\ofxProcessFFT.h">
+      <Filter>addons\ofxFft\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\libs\fftw\include\fftw3.h">
+      <Filter>addons\ofxFft\libs\fftw\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\libs\kiss\kiss_fft.h">
+      <Filter>addons\ofxFft\libs\kiss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\libs\kiss\kiss_fftr.h">
+      <Filter>addons\ofxFft\libs\kiss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxFft\libs\kiss\_kiss_fft_guts.h">
+      <Filter>addons\ofxFft\libs\kiss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxPostGlitch\src\ofxPostGlitch.h">
+      <Filter>addons\ofxPostGlitch\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>
