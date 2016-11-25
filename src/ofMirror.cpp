@@ -60,7 +60,6 @@ void ofMirror::draw(){
     
     //------------現在------------------
     if(gui->startR){
-        gui->effectControl(startCount);
         gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
         //黒の幕開け
         ofSetColor(0,0,0,300-startCount);
@@ -79,20 +78,20 @@ void ofMirror::draw(){
         
         int buf = gui->buffer%BufferSize;//バッファサイズを置換0~1799
         
-        if(buf<(BufferSize/2)){//格納バッファの半分前
-            index = BufferSize+(buf-BufferSize/2); //バッファサイズで補正
+        if(buf<(BufferSize/3)){//格納バッファの半分前
+            index = BufferSize+(buf-BufferSize/3); //バッファサイズで補正
         }else{
-            index = buf-(BufferSize/2);//単純に任意のフレーム前
+            index = buf-(BufferSize/3);//単純に任意のフレーム前
         }
         //------------1.巻き戻し----------------
         //巻き戻し再生の開始
         if(flg){
-            index += (BufferSize/2)-number;
+            index += (BufferSize/3)-number;
             if(index >= BufferSize){//バッファの大きさ以上になってしまったら(補正)
                 index = index - BufferSize;
             }
             number += 10; //巻き戻し用
-            if(number >= (BufferSize/2)){//戻したい過去まで巻き戻したら
+            if(number >= (BufferSize/3)){//戻したい過去まで巻き戻したら
                 flg = false;
             }
         }
@@ -102,17 +101,9 @@ void ofMirror::draw(){
         //FBOの描画全般
         gui->DrawFBO(gui->R,index);
         
-        gui->Black();
-        
         if(!flg){
             counter ++;//巻き戻し終了->描画の開始からインクリメント
         }
-        
-        /*if(counter < 5){
-         ofSetColor(255);
-         ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-         }*/
-        
         
         //-----------3.アウトロ(レイヤーが重なっていく)------------
         if(counter > 6*BufferSize/10){
@@ -121,7 +112,7 @@ void ofMirror::draw(){
             
             //現在の映像を流し始める
             ofSetColor(255,255, 255, counter%(6*BufferSize/10));
-            gui->vidGrabber[gui->R].draw(0,0,1125,ofGetHeight());
+            gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
         }
         
         //-------------終了処理--------------

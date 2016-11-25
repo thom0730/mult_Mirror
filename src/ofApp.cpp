@@ -56,7 +56,7 @@ void ofApp::draw(){
     
     //------------現在------------------
     if(gui->startL){
-        gui->effectControl(startCount);
+        gui->effectControl(startCount,gui->startL);
         gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         //黒の幕開け
         ofSetColor(0,0,0,300-startCount);
@@ -76,20 +76,20 @@ void ofApp::draw(){
 
         int buf = gui->buffer%BufferSize;//バッファサイズを置換0~1799
         
-        if(buf<(BufferSize/2)){//格納バッファの半分前
-             index = BufferSize+(buf-BufferSize/2); //バッファサイズで補正
+        if(buf<(BufferSize/3)){//格納バッファの半分前
+             index = BufferSize+(buf-BufferSize/3); //バッファサイズで補正
         }else{
-             index = buf-(BufferSize/2);//単純に任意のフレーム前
+             index = buf-(BufferSize/3);//単純に任意のフレーム前
         }
         //------------1.巻き戻し----------------
         //巻き戻し再生の開始
         if(flg){
-            index += (BufferSize/2)-number;
+            index += (BufferSize/3)-number;
             if(index >= BufferSize){//バッファの大きさ以上になってしまったら(補正)
                 index = index - BufferSize;
             }
              number += 10; //巻き戻し用
-            if(number >= (BufferSize/2)){//戻したい過去まで巻き戻したら
+            if(number >= (BufferSize/3)){//戻したい過去まで巻き戻したら
                 flg = false;
             }
         }
@@ -98,7 +98,7 @@ void ofApp::draw(){
         //------------2.描画/エフェクト----------------
         //FBOの描画全般
         //エフェクトのスイッチ
-        gui->effectControl(counter);
+        gui->effectControl(counter,flg);
 
         gui->DrawFBO(gui->L,index);
         
@@ -114,16 +114,19 @@ void ofApp::draw(){
         }
 
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 6*BufferSize/10){
+        if(counter > 7*BufferSize/10){
             cout << "END" << endl;
-            ofSetColor(0, 0, 0, counter%(6*BufferSize/10));
+            ofSetColor(0, 0, 0, counter%(7*BufferSize/10));
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
  
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(6*BufferSize/10));
-            gui->vidGrabber[gui->L].draw(0,0,1125,ofGetHeight());
+            ofSetColor(255,255, 255, counter%(7*BufferSize/10));
+            gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
         }
-        gui->Black();
+        //------------------4.暗転-----------------------
+        if(counter == BufferSize-ofGetHeight()){
+            gui->Black();
+        }
 
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
@@ -133,8 +136,7 @@ void ofApp::draw(){
             number = 0;
             beatsound.stop();
             //黒色エフェクトの停止処理
-            gui->blackCircle = false;
-            gui-> circleRadius = 0;
+            gui-> BlackStart = 0;
         }
     }
 }

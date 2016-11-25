@@ -69,7 +69,7 @@ public:
     int circleRadius = 0; //中心から広がる円の半径
     
     //とりあえずランダムのエフェクトを生成
-    void effectControl(int counter);
+    void effectControl(int counter,bool _flg);
     int effectFlg[effectNUM];
     
    
