@@ -50,6 +50,10 @@ void ofMirror::update(){
     }else{
         gui->shaker = false;
     }*/
+    
+    cout << "現在の横の長さ 2 = " << ofGetWidth() << endl;
+    cout << "現在の横の長さ 2 = " << ofGetHeight() << endl;
+    
 }
 
 //--------------------------------------------------------------

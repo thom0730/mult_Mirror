@@ -102,12 +102,21 @@ void GuiApp::update(){
 //--------------------------------------------------------------
 void GuiApp::draw(){
     //GUIの描画
+    
     gui.draw();
+    
     
     //カメラ映像の描画
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].draw(0,i*camHeight);
     }
+    
+    //デバッグ用
+    ofSetColor(255,0,0);
+    ofLine(0,ofGetHeight()/4,ofGetWidth(),ofGetHeight()/4);
+    ofLine(0,3*ofGetHeight()/4,ofGetWidth(),3*ofGetHeight()/4);
+    ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
+    ofSetColor(255);
     
 }
 //--------------------------------------------------------------
@@ -259,7 +268,9 @@ void GuiApp::DrawFBO(int camera, int index){
     oneGlitch[camera].generateFx();
     
     //FBOの描画
-   oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
+    //oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
+    oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,oneFbo[camera]->getWidth()/2,ofGetHeight());
+
 }
 //--------------------------------------------------------------
 void GuiApp::effectControl(int counter,bool _flg){

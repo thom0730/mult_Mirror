@@ -45,6 +45,8 @@ void ofApp::update(){
     }
     
   
+    cout << "現在の横の長さ 1 = " << ofGetWidth() << endl;
+    cout << "現在の横の長さ 1 = " << ofGetHeight() << endl;
 
 }
 
@@ -57,12 +59,21 @@ void ofApp::draw(){
     //------------現在------------------
     if(gui->startL){
         gui->effectControl(startCount,gui->startL);
-        gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
+        gui->vidGrabber[gui->L].draw(-300,0,1125,ofGetHeight());
         //黒の幕開け
         ofSetColor(0,0,0,300-startCount);
         ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
         //現在映像の部分のカウンターのインクリメント
         startCount++;
+        
+        ofSetColor(255,0,0);
+        ofLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
+        ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
+        ofSetColor(255);
+        
+        
+        
+        
         if(startCount>BufferSize/4){//だいたいこんなもん?
             gui->startL = false;//「現在」を抜ける
             gui->DrawFlg[gui->L] = true;//イントロの開始
@@ -102,6 +113,11 @@ void ofApp::draw(){
 
         gui->DrawFBO(gui->L,index);
         
+        ofSetColor(255,0,0);
+        ofLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
+        ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
+        ofSetColor(255);
+        
        // ofSetColor(255,1,1);
         //ofDrawRectangle(100 , 100, 20,20);
         
@@ -121,7 +137,7 @@ void ofApp::draw(){
  
             //現在の映像を流し始める
             ofSetColor(255,255, 255, counter%(7*BufferSize/10));
-            gui->vidGrabber[gui->L].draw(-290,0,1125,ofGetHeight());
+            gui->vidGrabber[gui->L].draw(-300,0,1125,ofGetHeight());
         }
         //------------------4.暗転-----------------------
         /*  if(counter == BufferSize-(gui->BlackStart)){
