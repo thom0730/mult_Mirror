@@ -33,7 +33,7 @@ void ofApp::update(){
 
     
     //心拍音の再生とエフェクト同期
-    if(counter == 6*BufferSize/10){
+    if(counter == 3*BufferSize/4){
         beatsound.play();
     }
     if(low > 0.01){
@@ -43,11 +43,6 @@ void ofApp::update(){
         gui->shader[1] = false;
         gui->shader[4] = false;
     }
-    
-  
-    cout << "現在の横の長さ 1 = " << ofGetWidth() << endl;
-    cout << "現在の横の長さ 1 = " << ofGetHeight() << endl;
-
 }
 
 //--------------------------------------------------------------
@@ -113,37 +108,21 @@ void ofApp::draw(){
 
         gui->DrawFBO(gui->L,index);
         
-        ofSetColor(255,0,0);
-        ofLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
-        ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
-        ofSetColor(255);
-        
-       // ofSetColor(255,1,1);
-        //ofDrawRectangle(100 , 100, 20,20);
-        
-        //ここで背景色をもとに戻さないといけないっぽい
-        ofSetColor(255);
-        
         if(!flg){
-            counter ++;//巻き戻し終了->描画の開始からインクリメント
-            cout << "counter 1 " << counter << endl;
+            counter ++;//巻き戻し終了->描画の開始からインクリ
         }
 
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 7*BufferSize/10){
-            cout << "END" << endl;
-            ofSetColor(0, 0, 0, counter%(7*BufferSize/10));
+        if(counter > 3*BufferSize/5){
+            gui->outTime += 0.5;
+            ofSetColor(0, 0, 0, gui->outTime);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
  
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(7*BufferSize/10));
+            ofSetColor(255,255, 255, gui->outTime);
             gui->vidGrabber[gui->L].draw(-300,0,1125,ofGetHeight());
         }
-        //------------------4.暗転-----------------------
-        /*  if(counter == BufferSize-(gui->BlackStart)){
-           // gui->Black();
-            ofSetColor(255);
-        }*/
+
 
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
@@ -151,9 +130,7 @@ void ofApp::draw(){
             counter = 0;
             flg = true;
             number = 0;
-            beatsound.stop();
-            //黒色エフェクトの停止処理
-            gui-> BlackStart = 0;
+
         }
     }
 }
@@ -182,7 +159,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    cout << "マウスのX座票 " << x << endl;
+    cout << "マウスのY座票 " << y << endl;
 }
 
 //--------------------------------------------------------------
@@ -192,7 +170,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+   
 }
 
 //--------------------------------------------------------------
@@ -222,7 +200,7 @@ void ofApp::stop(){
 //--------------------------------------------------------------
 void ofApp::Trigger(){
     if(counter == 0 ){ //counterが0の時点では動画セットは再生していない
-        int i  = ofRandom(1000);
+        int i  = ofRandom(600);
         if(i == 2){
             gui->startL = true;
             gui->startR = true;

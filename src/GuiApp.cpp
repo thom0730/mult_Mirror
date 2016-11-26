@@ -28,16 +28,16 @@ void GuiApp::setup(){
     camWidth = ofGetWidth();
     camHeight = ofGetHeight()/2;
     
-    
+
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].setVerbose(true);//カメラの準備
         DrawFlg[i] = false;//フラグの初期化
     }
     
     //カメラのIDは直接入力が良さそう
-     vidGrabber[0].setDeviceID(0);
+     vidGrabber[0].setDeviceID(1);
      vidGrabber[0].initGrabber(camWidth, camHeight);
-     vidGrabber[1].setDeviceID(1);
+     vidGrabber[1].setDeviceID(2);
      vidGrabber[1].initGrabber(camWidth, camHeight);
     
     
@@ -183,14 +183,7 @@ void GuiApp::keyPressed(int key){
         
     }
     
-    ////////////////黒系のエフェクト////////////////
-    if(key == 'm'){
-        blackFlg = true;
-       // center = ofGetHeight();
 
-    }
- 
-    /////////////////////////////////////
 }
 
 //--------------------------------------------------------------
@@ -223,13 +216,6 @@ void GuiApp::keyReleased(int key){
     
 }
 
-//--------------------------------------------------------------
-void GuiApp::Black(){
-    ofSetColor(0);
-    BlackStart = BlackStart -1;
-    ofDrawCircle(ofGetWidth()/2, BlackStart, ofGetWidth());
-
-}
 //--------------------------------------------------------------
 void GuiApp::Memory(int camera){
     int index = buffer%BufferSize ;
@@ -268,13 +254,13 @@ void GuiApp::DrawFBO(int camera, int index){
     oneGlitch[camera].generateFx();
     
     //FBOの描画
-    //oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
-    oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,oneFbo[camera]->getWidth()/2,ofGetHeight());
+    oneFbo[camera]->draw(-oneFbo[camera]->getWidth()/2, 0,1125,ofGetHeight());
+   
 
 }
 //--------------------------------------------------------------
 void GuiApp::effectControl(int counter,bool _flg){
-    int i = ofRandom(900);
+    int i = ofRandom(800);
    
      //グリッチの切り替え
    /* if(i == 1){
@@ -321,8 +307,6 @@ void GuiApp::effectControl(int counter,bool _flg){
                 R = 1;
                 
             }
-            
-            
         }
     }
 

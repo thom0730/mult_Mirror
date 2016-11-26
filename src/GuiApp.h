@@ -7,7 +7,7 @@
 //カメラの台数
 #define camNUM 2
 //30fps*30s=900
-#define BufferSize 3000
+#define BufferSize 2000
 //エフェクトの数
 #define effectNUM 8
 
@@ -61,14 +61,13 @@ public:
     int L = 0;
     int R = 1;
     
-    //画面エフェクト
-    void Black();
-    bool blackFlg = false;
-    int BlackStart = ofGetHeight()+ofGetWidth(); //日の出エフェクトのy座標の初期位置
     
     //とりあえずランダムのエフェクトを生成
     void effectControl(int counter,bool _flg);
     int effectFlg[effectNUM];
+    
+    //フェードアウトの変数
+    float outTime = 0;
     
    
 };

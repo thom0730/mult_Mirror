@@ -50,10 +50,6 @@ void ofMirror::update(){
     }else{
         gui->shaker = false;
     }*/
-    
-    cout << "現在の横の長さ 2 = " << ofGetWidth() << endl;
-    cout << "現在の横の長さ 2 = " << ofGetHeight() << endl;
-    
 }
 
 //--------------------------------------------------------------
@@ -64,7 +60,7 @@ void ofMirror::draw(){
     
     //------------現在------------------
     if(gui->startR){
-        gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
+        gui->vidGrabber[gui->R].draw(-300,0,1125,ofGetHeight());
         //黒の幕開け
         ofSetColor(0,0,0,300-startCount);
         ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
@@ -111,19 +107,15 @@ void ofMirror::draw(){
         }
         
         //-----------3.アウトロ(レイヤーが重なっていく)------------
-        if(counter > 7*BufferSize/10){
-            ofSetColor(0, 0, 0, counter%(7*BufferSize/10));
+        if(counter > 3*BufferSize/5){
+            ofSetColor(0, 0, 0, gui->outTime);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             
             //現在の映像を流し始める
-            ofSetColor(255,255, 255, counter%(7*BufferSize/10));
-            gui->vidGrabber[gui->R].draw(-290,0,1125,ofGetHeight());
+            ofSetColor(255,255, 255, gui->outTime);
+            gui->vidGrabber[gui->R].draw(-300,0,1125,ofGetHeight());
         }
-        //------------------4.暗転-----------------------
-        /* if(counter == BufferSize-(gui->BlackStart)){
-           // gui->Black();
-            ofSetColor(255);
-        }*/
+
         //-------------終了処理--------------
         if(counter == BufferSize){//バッファサイズまで再生が完了したら
             gui->DrawFlg[gui->R] = false;
