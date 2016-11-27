@@ -60,15 +60,7 @@ void ofApp::draw(){
         ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
         //現在映像の部分のカウンターのインクリメント
         startCount++;
-        
-        ofSetColor(255,0,0);
-        ofLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
-        ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
-        ofSetColor(255);
-        
-        
-        
-        
+
         if(startCount>BufferSize/4){//だいたいこんなもん?
             gui->startL = false;//「現在」を抜ける
             gui->DrawFlg[gui->L] = true;//イントロの開始
@@ -159,8 +151,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    cout << "マウスのX座票 " << x << endl;
-    cout << "マウスのY座票 " << y << endl;
+    
 }
 
 //--------------------------------------------------------------

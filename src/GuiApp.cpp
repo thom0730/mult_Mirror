@@ -110,14 +110,7 @@ void GuiApp::draw(){
     for(int i = 0 ; i < camNUM; i++){
         vidGrabber[i].draw(0,i*camHeight);
     }
-    
-    //デバッグ用
-    ofSetColor(255,0,0);
-    ofLine(0,ofGetHeight()/4,ofGetWidth(),ofGetHeight()/4);
-    ofLine(0,3*ofGetHeight()/4,ofGetWidth(),3*ofGetHeight()/4);
-    ofLine(ofGetWidth()/2,0,ofGetWidth()/2,ofGetHeight());
-    ofSetColor(255);
-    
+
 }
 //--------------------------------------------------------------
 void GuiApp::keyPressed(int key){
